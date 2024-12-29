@@ -1,0 +1,15 @@
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\bin\Debug\net7.0-windows\Universe of computer science.exe
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\bin\Debug\net7.0-windows\Universe of computer science.deps.json
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\bin\Debug\net7.0-windows\Universe of computer science.runtimeconfig.json
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\bin\Debug\net7.0-windows\Universe of computer science.dll
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\bin\Debug\net7.0-windows\Universe of computer science.pdb
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\obj\Debug\net7.0-windows\Universe of computer science.csproj.AssemblyReference.cache
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\obj\Debug\net7.0-windows\Universe of computer science.GeneratedMSBuildEditorConfig.editorconfig
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\obj\Debug\net7.0-windows\Universe of computer science.AssemblyInfoInputs.cache
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\obj\Debug\net7.0-windows\Universe of computer science.AssemblyInfo.cs
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\obj\Debug\net7.0-windows\Universe of computer science.csproj.CoreCompileInputs.cache
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\obj\Debug\net7.0-windows\Universe of computer science.dll
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\obj\Debug\net7.0-windows\refint\Universe of computer science.dll
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\obj\Debug\net7.0-windows\Universe of computer science.pdb
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\obj\Debug\net7.0-windows\Universe of computer science.genruntimeconfig.cache
+E:\projects\Индивидуальный проект - переделка Мира Информатики\NewWorldOfInfo\Universe of computer science\Universe of computer science\obj\Debug\net7.0-windows\ref\Universe of computer science.dll
