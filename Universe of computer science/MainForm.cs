@@ -9,21 +9,33 @@ public partial class MainForm : Form
 
     private void label1_Click(object sender, EventArgs e)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     private void FirstModeButton_Click(object sender, EventArgs e)
     {
-        throw new System.NotImplementedException();
+        PrimarySchoolForm newPrimarySchoolForm = new PrimarySchoolForm();
+        newPrimarySchoolForm.StartPosition = FormStartPosition.Manual;
+        newPrimarySchoolForm.Location = this.Location; // Назначение локации изначальной  формы
+        newPrimarySchoolForm.FormClosed += (s, args) => this.Close(); // Чтобы всё грамотно закрывалось
+        this.Hide();
+
+        newPrimarySchoolForm.Show();
     }
 
     private void SecondModeButton_Click(object sender, EventArgs e)
     {
-        throw new System.NotImplementedException();
+        HighSchoolForm highSchoolForm = new HighSchoolForm();
+        highSchoolForm.StartPosition = FormStartPosition.Manual;
+        highSchoolForm.Location = this.Location; // Назначение локации изначальной  формы
+        highSchoolForm.FormClosed += (s, args) => this.Close(); // Чтобы всё грамотно закрывалось
+        this.Hide();
+
+        highSchoolForm.Show();
     }
 
-    private void ThirdModeButton_Click(object sender, EventArgs e)
-    {
-        throw new System.NotImplementedException();
-    }
+    private void AboutButton_Click(object sender, EventArgs e) => this.infoMenu.Visible = true;
+
+    private void CloseInfoButton_Click(object sender, EventArgs e) => this.infoMenu.Visible = false;
+
 }

@@ -31,10 +31,17 @@ partial class PrimarySchoolForm
     /// </summary>
     private void InitializeComponent()
     {
-        this.components = new System.ComponentModel.Container();
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        this.ClientSize = new System.Drawing.Size(800, 450);
-        this.Text = "PrimarySchoolForm";
+        SuspendLayout();
+        // 
+        // SecondarySchoolForm
+        // 
+        AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+        ClientSize = new System.Drawing.Size(909, 488);
+        MaximizeBox = false;
+        ShowIcon = false;
+        Text = "Вселенная информатики";
+        ResumeLayout(false);
     }
 
     #endregion

@@ -32,7 +32,12 @@ partial class MainForm
         label1 = new System.Windows.Forms.Label();
         FirstModeButton = new System.Windows.Forms.Button();
         SecondModeButton = new System.Windows.Forms.Button();
-        ThirdModeButton = new System.Windows.Forms.Button();
+        disableSoundButton = new System.Windows.Forms.Button();
+        aboutButton = new System.Windows.Forms.Button();
+        infoMenu = new System.Windows.Forms.GroupBox();
+        CloseInfoButton = new System.Windows.Forms.Button();
+        label2 = new System.Windows.Forms.Label();
+        infoMenu.SuspendLayout();
         SuspendLayout();
         // 
         // label1
@@ -50,7 +55,7 @@ partial class MainForm
         // FirstModeButton
         // 
         FirstModeButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-        FirstModeButton.Location = new System.Drawing.Point(121, 216);
+        FirstModeButton.Location = new System.Drawing.Point(241, 216);
         FirstModeButton.Name = "FirstModeButton";
         FirstModeButton.Size = new System.Drawing.Size(142, 161);
         FirstModeButton.TabIndex = 1;
@@ -61,7 +66,7 @@ partial class MainForm
         // SecondModeButton
         // 
         SecondModeButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-        SecondModeButton.Location = new System.Drawing.Point(366, 216);
+        SecondModeButton.Location = new System.Drawing.Point(508, 216);
         SecondModeButton.Name = "SecondModeButton";
         SecondModeButton.Size = new System.Drawing.Size(142, 161);
         SecondModeButton.TabIndex = 2;
@@ -69,16 +74,56 @@ partial class MainForm
         SecondModeButton.UseVisualStyleBackColor = true;
         SecondModeButton.Click += SecondModeButton_Click;
         // 
-        // ThirdModeButton
+        // disableSoundButton
         // 
-        ThirdModeButton.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-        ThirdModeButton.Location = new System.Drawing.Point(621, 216);
-        ThirdModeButton.Name = "ThirdModeButton";
-        ThirdModeButton.Size = new System.Drawing.Size(142, 161);
-        ThirdModeButton.TabIndex = 3;
-        ThirdModeButton.Text = "Старшая школа\r\n\r\n10-11 год обучения";
-        ThirdModeButton.UseVisualStyleBackColor = true;
-        ThirdModeButton.Click += ThirdModeButton_Click;
+        disableSoundButton.Location = new System.Drawing.Point(10, 9);
+        disableSoundButton.Name = "disableSoundButton";
+        disableSoundButton.Size = new System.Drawing.Size(36, 37);
+        disableSoundButton.TabIndex = 3;
+        disableSoundButton.Text = "button1";
+        disableSoundButton.UseVisualStyleBackColor = true;
+        // 
+        // aboutButton
+        // 
+        aboutButton.Location = new System.Drawing.Point(9, 463);
+        aboutButton.Name = "aboutButton";
+        aboutButton.Size = new System.Drawing.Size(115, 20);
+        aboutButton.TabIndex = 4;
+        aboutButton.Text = "Информация";
+        aboutButton.UseVisualStyleBackColor = true;
+        aboutButton.Click += AboutButton_Click;
+        // 
+        // infoMenu
+        // 
+        infoMenu.BackColor = System.Drawing.SystemColors.ControlLight;
+        infoMenu.Controls.Add(CloseInfoButton);
+        infoMenu.Controls.Add(label2);
+        infoMenu.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+        infoMenu.Location = new System.Drawing.Point(230, 50);
+        infoMenu.Name = "infoMenu";
+        infoMenu.Size = new System.Drawing.Size(420, 383);
+        infoMenu.TabIndex = 5;
+        infoMenu.TabStop = false;
+        infoMenu.Text = "Информация";
+        infoMenu.Visible = false;
+        // 
+        // CloseInfoButton
+        // 
+        CloseInfoButton.Location = new System.Drawing.Point(382, 19);
+        CloseInfoButton.Name = "CloseInfoButton";
+        CloseInfoButton.Size = new System.Drawing.Size(32, 28);
+        CloseInfoButton.TabIndex = 1;
+        CloseInfoButton.Text = "X";
+        CloseInfoButton.UseVisualStyleBackColor = true;
+        CloseInfoButton.Click += CloseInfoButton_Click;
+        // 
+        // label2
+        // 
+        label2.Location = new System.Drawing.Point(15, 50);
+        label2.Name = "label2";
+        label2.Size = new System.Drawing.Size(399, 309);
+        label2.TabIndex = 0;
+        label2.Text = "Информация о приложении";
         // 
         // MainForm
         // 
@@ -86,7 +131,9 @@ partial class MainForm
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
         ClientSize = new System.Drawing.Size(909, 488);
-        Controls.Add(ThirdModeButton);
+        Controls.Add(infoMenu);
+        Controls.Add(aboutButton);
+        Controls.Add(disableSoundButton);
         Controls.Add(SecondModeButton);
         Controls.Add(FirstModeButton);
         Controls.Add(label1);
@@ -94,14 +141,22 @@ partial class MainForm
         MaximizeBox = false;
         ShowIcon = false;
         Text = "Вселенная информатики";
+        infoMenu.ResumeLayout(false);
         ResumeLayout(false);
     }
+
+    private System.Windows.Forms.Button CloseInfoButton;
+
+    private System.Windows.Forms.GroupBox infoMenu;
+    private System.Windows.Forms.Label label2;
+
+    private System.Windows.Forms.Button aboutButton;
+
+    private System.Windows.Forms.Button disableSoundButton;
 
     private System.Windows.Forms.Button FirstModeButton;
 
     private System.Windows.Forms.Button SecondModeButton;
-
-    private System.Windows.Forms.Button ThirdModeButton;
 
     private System.Windows.Forms.Label label1;
 
