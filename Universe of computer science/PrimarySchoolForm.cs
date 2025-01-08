@@ -21,4 +21,10 @@ public partial class PrimarySchoolForm : Form
         MainForm mainForm = new MainForm();
         OpenNewForm(mainForm);
     }
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+        StartLessonForm startLessonForm = new StartLessonForm("rulesInCabinet", StartLessonForm.LessonMode.Frames);
+        OpenNewForm(startLessonForm);
+    }
 }

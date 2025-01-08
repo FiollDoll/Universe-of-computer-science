@@ -4,7 +4,7 @@ public class Lesson
 {
     public string LessonName;
     public string LessonDescription;
-    public Bitmap FirstImage, SecondImage;
+    public Image FirstImage, SecondImage;
 
     public Lesson()
     {
@@ -38,6 +38,5 @@ public interface ILessonManager
     public Lesson totalLesson { get; set; }
     public Dictionary<string, Lesson> allLessons { get; set; }
     
-    public Lesson FindLesson();
     public void SetStartLessonSettings();
 }

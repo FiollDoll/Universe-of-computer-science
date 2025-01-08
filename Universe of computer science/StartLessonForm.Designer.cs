@@ -36,6 +36,7 @@ partial class StartLessonForm
         buttonStart = new System.Windows.Forms.Button();
         buttonReturn = new System.Windows.Forms.Button();
         textDescription = new System.Windows.Forms.RichTextBox();
+        labelName = new System.Windows.Forms.Label();
         ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
         ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
         SuspendLayout();
@@ -44,9 +45,9 @@ partial class StartLessonForm
         // 
         pictureBox1.BackColor = System.Drawing.SystemColors.Info;
         pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-        pictureBox1.Location = new System.Drawing.Point(116, 21);
+        pictureBox1.Location = new System.Drawing.Point(116, 46);
         pictureBox1.Name = "pictureBox1";
-        pictureBox1.Size = new System.Drawing.Size(185, 197);
+        pictureBox1.Size = new System.Drawing.Size(181, 193);
         pictureBox1.TabIndex = 0;
         pictureBox1.TabStop = false;
         // 
@@ -54,48 +55,60 @@ partial class StartLessonForm
         // 
         pictureBox2.BackColor = System.Drawing.SystemColors.Info;
         pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-        pictureBox2.Location = new System.Drawing.Point(116, 219);
+        pictureBox2.Location = new System.Drawing.Point(116, 244);
         pictureBox2.Name = "pictureBox2";
-        pictureBox2.Size = new System.Drawing.Size(185, 197);
+        pictureBox2.Size = new System.Drawing.Size(181, 193);
         pictureBox2.TabIndex = 1;
         pictureBox2.TabStop = false;
         // 
         // buttonStart
         // 
-        buttonStart.Location = new System.Drawing.Point(454, 376);
+        buttonStart.Location = new System.Drawing.Point(454, 401);
         buttonStart.Name = "buttonStart";
-        buttonStart.Size = new System.Drawing.Size(246, 40);
+        buttonStart.Size = new System.Drawing.Size(242, 36);
         buttonStart.TabIndex = 3;
         buttonStart.Text = "Начать";
         buttonStart.UseVisualStyleBackColor = true;
         buttonStart.Click += buttonStart_Click;
         // 
-        // button1
+        // buttonReturn
         // 
         buttonReturn.Location = new System.Drawing.Point(11, 12);
-        buttonReturn.Name = "button1";
+        buttonReturn.Name = "buttonReturn";
         buttonReturn.Size = new System.Drawing.Size(48, 41);
         buttonReturn.TabIndex = 4;
         buttonReturn.Text = "<-";
         buttonReturn.UseVisualStyleBackColor = true;
+        buttonReturn.Click += buttonReturn_Click_1;
         // 
         // textDescription
         // 
         textDescription.BackColor = System.Drawing.SystemColors.Info;
         textDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
         textDescription.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-        textDescription.Location = new System.Drawing.Point(395, 22);
+        textDescription.Location = new System.Drawing.Point(395, 47);
         textDescription.Name = "textDescription";
         textDescription.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-        textDescription.Size = new System.Drawing.Size(364, 348);
+        textDescription.Size = new System.Drawing.Size(360, 344);
         textDescription.TabIndex = 5;
         textDescription.Text = "Текст";
+        // 
+        // labelName
+        // 
+        labelName.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+        labelName.Location = new System.Drawing.Point(117, 0);
+        labelName.Name = "labelName";
+        labelName.Size = new System.Drawing.Size(627, 43);
+        labelName.TabIndex = 6;
+        labelName.Text = "Название темы";
+        labelName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         // 
         // StartLessonForm
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(800, 450);
+        Controls.Add(labelName);
         Controls.Add(textDescription);
         Controls.Add(buttonReturn);
         Controls.Add(buttonStart);
@@ -106,6 +119,8 @@ partial class StartLessonForm
         ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
         ResumeLayout(false);
     }
+
+    private System.Windows.Forms.Label labelName;
 
     private System.Windows.Forms.RichTextBox textDescription;
 

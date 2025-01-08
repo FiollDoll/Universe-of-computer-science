@@ -120,8 +120,9 @@ partial class PrimarySchoolForm
         button1.Name = "button1";
         button1.Size = new System.Drawing.Size(266, 28);
         button1.TabIndex = 0;
-        button1.Text = "Название темы";
+        button1.Text = "Правила поведения в кабинете информатики";
         button1.UseVisualStyleBackColor = true;
+        button1.Click += button1_Click;
         // 
         // panel1
         // 

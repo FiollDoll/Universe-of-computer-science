@@ -1,32 +1,15 @@
 ﻿namespace Universe_of_computer_science.Lessons;
 
-public partial class FramesLessonForm : Form, ILessonManager
+public partial class FramesLessonForm : Form
 {
-    public Lesson totalLesson { get; set; }
-    public Dictionary<string, Lesson> allLessons { get; set; }
-    
+    public Lesson totalLesson;
+    public Dictionary<string, Lesson> allLessons;
+
     /// <summary>
     /// Форма, в которой обучение происходит за счёт кадров и текста.
     /// </summary>
-    public FramesLessonForm()
+    public FramesLessonForm(string selectedLesson)
     {
         InitializeComponent();
-        allLessons = new Dictionary<string, Lesson>
-        {
-            {"", new Lesson()},
-            {"", new Lesson()},
-            {"", new Lesson()},
-        };
-
-    }
-
-    public Lesson FindLesson()
-    {
-        return null;
-    }
-
-    public void SetStartLessonSettings()
-    {
-        
     }
 }
