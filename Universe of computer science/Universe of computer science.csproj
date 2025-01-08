@@ -16,6 +16,15 @@
       <Compile Update="HighSchoolForm.cs">
         <SubType>Form</SubType>
       </Compile>
+      <Compile Update="Lessons\FramesLessonForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="Lessons\KeyboardMinigame.cs">
+        <SubType>Form</SubType>
+      </Compile>
+      <Compile Update="StartLessonForm.cs">
+        <SubType>Form</SubType>
+      </Compile>
     </ItemGroup>
 
 </Project>

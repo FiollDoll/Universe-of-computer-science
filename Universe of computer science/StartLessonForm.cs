@@ -1,9 +1,15 @@
 ﻿namespace Universe_of_computer_science;
 
-public partial class PrimarySchoolForm : Form
+public partial class StartLessonForm : Form
 {
-    public PrimarySchoolForm()
+    private string _selectedLesson;
+    private LessonMode _selectedMode;
+    public enum LessonMode {Any, Frames, Keyboard}
+    
+    public StartLessonForm(string nameLesson, LessonMode lessonMode)
     {
+        _selectedLesson = nameLesson;
+        _selectedMode = lessonMode;
         InitializeComponent();
     }
     
@@ -16,9 +22,14 @@ public partial class PrimarySchoolForm : Form
         form.Show();
     }
     
-    private void ButtonReturn_Click(object sender, EventArgs e)
+    private void buttonReturn_Click(object sender, EventArgs e)
     {
         MainForm mainForm = new MainForm();
         OpenNewForm(mainForm);
+    }
+
+    private void buttonStart_Click(object sender, EventArgs e)
+    {
+        
     }
 }
