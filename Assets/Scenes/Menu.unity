@@ -163,7 +163,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef1b77285917fdc8db5c27bec5de1b10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allLevels: []
+  themes:
+  - nameOfTheme: Test
+    levelsInTheme:
+    - nameOfLevel: 1
+    - nameOfLevel: 2
+    - nameOfLevel: 3
+  - nameOfTheme: Test
+    levelsInTheme:
+    - nameOfLevel: 1
+    - nameOfLevel: 2
+    - nameOfLevel: 3
 --- !u!1 &225180850
 GameObject:
   m_ObjectHideFlags: 0
@@ -2989,6 +2999,9 @@ MonoBehaviour:
   - {fileID: 1235917623}
   - {fileID: 532558782}
   - {fileID: 1563265826}
+  blockThemePrefab: {fileID: 433836561536995071, guid: ba0f030fe95124e9bb1abfb9659aca52, type: 3}
+  buttonLevelPrefab: {fileID: 8354669675982258983, guid: 2bc68db1e2874951685e3f59c29c3717, type: 3}
+  blocksThemeParent: {fileID: 731533284}
 --- !u!4 &1757333728
 Transform:
   m_ObjectHideFlags: 0

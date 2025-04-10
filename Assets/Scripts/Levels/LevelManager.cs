@@ -5,8 +5,9 @@ public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance {get; private set;}
 
-    [SerializeField] private Level[] allLevels = new Level[0];
-    private Dictionary<string, Level> _dictAllLevels = new Dictionary<string, Level>();
+    [Header("ThemesAndLevels")]
+    public List<Theme> themes = new List<Theme>();
+    private Dictionary<string, Theme> _dictAllThemes = new Dictionary<string, Theme>();
 
     private void Awake()
     {
@@ -20,7 +21,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        foreach(Level lvl in allLevels)
-            _dictAllLevels.Add(lvl.nameOfLevel, lvl);
+        foreach(Theme theme in themes)
+            _dictAllThemes.Add(theme.nameOfTheme, theme);
     }
 }
