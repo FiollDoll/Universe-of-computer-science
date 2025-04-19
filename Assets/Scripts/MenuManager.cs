@@ -10,10 +10,14 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject[] allMenu = new GameObject[0];
     [SerializeField] private GameObject pageWithThemes, levelInfoMenu;
     [SerializeField] private AdaptiveScrollView scrollViewThemes;
-    [SerializeField] private GameObject blockThemePrefab, buttonLevelPrefab;
     [SerializeField] private Transform blocksThemeParent;
     [SerializeField] private TextMeshProUGUI textLvlName, textThemeName, textDescription;
-    
+    [SerializeField] private Button buttonStartLvl;
+
+    [Header("Prefabs")]
+    [SerializeField] private GameObject blockThemePrefab;
+    [SerializeField] private GameObject buttonLevelPrefab;
+
     private GameObject _selectedMenuOfThemes;
 
     private void ChangePage(GameObject page)
@@ -66,11 +70,19 @@ public class MenuManager : MonoBehaviour
         textLvlName.text = lvl.nameOfLevel;
         textThemeName.text = theme.nameOfTheme;
         textDescription.text = lvl.descriptionOfLevel;
+        buttonStartLvl.onClick.AddListener(() => StartLevel(theme, lvl));
     }
 
     public void CloseLevelInfo()
     {
         levelInfoMenu.SetActive(false);
         _selectedMenuOfThemes.SetActive(true);
+    }
+
+    public void StartLevel(Theme theme, Level lvl)
+    {
+        LevelManager.Instance.selectedTheme = theme;
+        LevelManager.Instance.selectedLvl = lvl;
+        SceneManager.LoadScene(1);
     }
 }

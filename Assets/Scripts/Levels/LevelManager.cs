@@ -4,6 +4,10 @@ using System.Collections.Generic;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance {get; private set;}
+    
+    [Header("Selected")]
+    public Theme selectedTheme;
+    public Level selectedLvl;
 
     [Header("ThemesAndLevels")]
     public List<Theme> themes = new List<Theme>();
