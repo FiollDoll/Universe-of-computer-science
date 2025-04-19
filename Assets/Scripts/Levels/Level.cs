@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class Theme
@@ -12,5 +13,6 @@ public class Theme
 public class Level
 {
     public string nameOfLevel;
-    public string descriptionOfLevel;
+    public Sprite preiconOfLevel;
+    [TextArea(0, 10)] public string descriptionOfLevel;
 }

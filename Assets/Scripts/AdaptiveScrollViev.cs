@@ -11,6 +11,8 @@ public class AdaptiveScrollView : MonoBehaviour
 {
     public RectTransform content;
 
+    private void Awake() => UpdateContentSize();
+
     public void UpdateContentSize()
     {
         LayoutRebuilder.ForceRebuildLayoutImmediate(content);
@@ -23,7 +25,7 @@ public class AdaptiveScrollView : MonoBehaviour
                 content.sizeDelta.y + child.sizeDelta.y + LayoutUtility.GetMargin(child)
             );
         }
-        content.sizeDelta = new Vector2(content.sizeDelta.x, content.sizeDelta.y);
+        content.sizeDelta = new Vector2(content.sizeDelta.x, content.sizeDelta.y / 1.8f);
     }
 
 }

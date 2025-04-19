@@ -9,6 +9,7 @@ public class MenuManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject[] allMenu = new GameObject[0];
     [SerializeField] private GameObject pageWithThemes, levelInfoMenu;
+    [SerializeField] private AdaptiveScrollView scrollViewThemes;
     [SerializeField] private GameObject blockThemePrefab, buttonLevelPrefab;
     [SerializeField] private Transform blocksThemeParent;
     [SerializeField] private TextMeshProUGUI textLvlName, textThemeName, textDescription;
@@ -33,7 +34,7 @@ public class MenuManager : MonoBehaviour
     {
         foreach (Transform child in blocksThemeParent)
             Destroy(child.gameObject);
-
+        
         foreach (Theme theme in LevelManager.Instance.themes)
         {
             if ((Enums.Category)mode == theme.themeCategory)
@@ -51,7 +52,7 @@ public class MenuManager : MonoBehaviour
                 }
             }
         }
-        GameObject.Find("ScrollViewThemes").GetComponent<AdaptiveScrollView>().UpdateContentSize();
+        scrollViewThemes.UpdateContentSize();
     }
 
     public void OpenMenu(GameObject menuObj) => ChangePage(menuObj);
