@@ -1,17 +1,26 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance {get; private set;}
     
-    [Header("Selected")]
-    public Theme selectedTheme;
-    public Level selectedLvl;
-
+    // Выбранное. Быстрый доступ
+    private Theme selectedTheme;
+    private Level selectedLvl;
+    private LevelStep selectedStep;
+    private int stepIdx;
+    
+    // Темы и уровни
     [Header("ThemesAndLevels")]
     public List<Theme> themes = new List<Theme>();
+    public List<TextStep> textSteps = new List<TextStep>();
+
     private Dictionary<string, Theme> _dictAllThemes = new Dictionary<string, Theme>();
+    private Dictionary<string, TextStep> _dictTextSteps = new Dictionary<string, TextStep>();
 
     private void Awake()
     {
@@ -27,5 +36,41 @@ public class LevelManager : MonoBehaviour
     {
         foreach(Theme theme in themes)
             _dictAllThemes.Add(theme.nameOfTheme, theme);
+
+        foreach (TextStep step in textSteps)
+            _dictTextSteps.Add(step.stepName, step);
+        
+    }
+
+    private TextStep GetTextStep(string stepName)
+    {
+        return _dictTextSteps[stepName];
+    }
+
+    public Level GetSelectedLevel()
+    {
+        return selectedLvl;
+    }
+
+    public void ActivateLevel(Theme theme, Level lvl)
+    {
+        selectedTheme = theme;
+        selectedLvl = lvl;
+        if (theme.themeCategory == Enums.Category.FirstToFourthClass)
+            SceneManager.LoadScene(1);
+        else
+            SceneManager.LoadScene(2);
+    }
+
+    public void ActivateStep(int step)
+    {
+        selectedStep = selectedLvl.levelSteps[step];
+        switch (selectedStep.lvlType)
+        {
+            case Enums.LevelType.TextLevel:
+                TextStep textStep = GetTextStep(selectedStep.stepName);
+                GamesManager.Instance.ActivateLvlInfoMenu(textStep);
+                break;
+        }
     }
 }

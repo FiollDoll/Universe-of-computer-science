@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class MenuManager : MonoBehaviour
@@ -79,13 +78,5 @@ public class MenuManager : MonoBehaviour
         _selectedMenuOfThemes.SetActive(true);
     }
 
-    public void StartLevel(Theme theme, Level lvl)
-    {
-        LevelManager.Instance.selectedTheme = theme;
-        LevelManager.Instance.selectedLvl = lvl;
-        if (theme.themeCategory == Enums.Category.FirstToFourthClass)
-            SceneManager.LoadScene(1);
-        else
-            SceneManager.LoadScene(2);
-    }
+    public void StartLevel(Theme theme, Level lvl) => LevelManager.Instance.ActivateLevel(theme, lvl);
 }
