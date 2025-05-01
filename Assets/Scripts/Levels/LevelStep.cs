@@ -11,6 +11,7 @@ public class LevelStep
 public class TextStep
 {
     public string stepName;
-    public string textName, textDescription;
+    public string textName;
+    [TextArea(0, 10)] public string textDescription;
     public Sprite image;
 }

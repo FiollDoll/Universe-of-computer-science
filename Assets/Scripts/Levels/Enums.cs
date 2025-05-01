@@ -8,6 +8,7 @@ public class Enums
 
     public enum LevelType
     {
-        TextLevel
+        TextLevel,
+        RightAnswerLevel
     }
 }

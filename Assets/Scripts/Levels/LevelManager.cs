@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
     private Theme selectedTheme;
     private Level selectedLvl;
     private LevelStep selectedStep;
-    private int stepIdx;
+    public int stepIdx;
     
     // Темы и уровни
     [Header("ThemesAndLevels")]
@@ -62,9 +62,9 @@ public class LevelManager : MonoBehaviour
             SceneManager.LoadScene(2);
     }
 
-    public void ActivateStep(int step)
+    public void ActivateStep()
     {
-        selectedStep = selectedLvl.levelSteps[step];
+        selectedStep = selectedLvl.levelSteps[stepIdx];
         switch (selectedStep.lvlType)
         {
             case Enums.LevelType.TextLevel:
