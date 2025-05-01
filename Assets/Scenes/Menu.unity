@@ -3169,7 +3169,7 @@ MonoBehaviour:
   textLvlName: {fileID: 1619554466}
   textThemeName: {fileID: 1860819639}
   textDescription: {fileID: 1907305262}
-  buttonStartLvl: {fileID: 0}
+  buttonStartLvl: {fileID: 1627866308}
   blockThemePrefab: {fileID: 433836561536995071, guid: ba0f030fe95124e9bb1abfb9659aca52, type: 3}
   buttonLevelPrefab: {fileID: 8354669675982258983, guid: 2bc68db1e2874951685e3f59c29c3717, type: 3}
 --- !u!4 &1757333728

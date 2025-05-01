@@ -83,6 +83,9 @@ public class MenuManager : MonoBehaviour
     {
         LevelManager.Instance.selectedTheme = theme;
         LevelManager.Instance.selectedLvl = lvl;
-        SceneManager.LoadScene(1);
+        if (theme.themeCategory == Enums.Category.FirstToFourthClass)
+            SceneManager.LoadScene(1);
+        else
+            SceneManager.LoadScene(2);
     }
 }

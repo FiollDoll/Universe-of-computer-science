@@ -5,4 +5,9 @@ public class Enums
         FirstToFourthClass, 
         FifthToNinthClass
     }
+
+    public enum LevelType
+    {
+        TextLevel
+    }
 }
