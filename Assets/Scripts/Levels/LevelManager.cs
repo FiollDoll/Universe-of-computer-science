@@ -41,17 +41,31 @@ public class LevelManager : MonoBehaviour
             _dictTextSteps.Add(step.stepName, step);
         
     }
-
+    
+    /// <summary>
+    /// Получить существующий TextStep
+    /// </summary>
+    /// <param name="stepName">Название TextStep</param>
+    /// <returns></returns>
     private TextStep GetTextStep(string stepName)
     {
         return _dictTextSteps[stepName];
     }
-
+    
+    /// <summary>
+    /// Получить выбранный уровень(для общего доступа)
+    /// </summary>
+    /// <returns></returns>
     public Level GetSelectedLevel()
     {
         return selectedLvl;
     }
-
+    
+    /// <summary>
+    /// Активировать новый уровень
+    /// </summary>
+    /// <param name="theme"></param>
+    /// <param name="lvl"></param>
     public void ActivateLevel(Theme theme, Level lvl)
     {
         selectedTheme = theme;
@@ -61,7 +75,10 @@ public class LevelManager : MonoBehaviour
         else
             SceneManager.LoadScene(2);
     }
-
+    
+    /// <summary>
+    /// Активировать шаг уровня
+    /// </summary>
     public void ActivateStep()
     {
         selectedStep = selectedLvl.levelSteps[stepIdx];
