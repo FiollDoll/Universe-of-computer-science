@@ -18,9 +18,12 @@ public class LevelManager : MonoBehaviour
     [Header("ThemesAndLevels")]
     public List<Theme> themes = new List<Theme>();
     public List<TextStep> textSteps = new List<TextStep>();
+    public List<RightAnswerStep> rightAnswerSteps = new List<RightAnswerStep>();
+
 
     private Dictionary<string, Theme> _dictAllThemes = new Dictionary<string, Theme>();
     private Dictionary<string, TextStep> _dictTextSteps = new Dictionary<string, TextStep>();
+    private Dictionary<string, RightAnswerStep> _dictRightAnswerSteps = new Dictionary<string, RightAnswerStep>();
 
     private void Awake()
     {
@@ -40,22 +43,24 @@ public class LevelManager : MonoBehaviour
         foreach (TextStep step in textSteps)
             _dictTextSteps.Add(step.stepName, step);
         
+        foreach (RightAnswerStep step in rightAnswerSteps)
+            _dictRightAnswerSteps.Add(step.stepName, step);
+        
     }
     
-    /// <summary>
-    /// Получить существующий TextStep
-    /// </summary>
-    /// <param name="stepName">Название TextStep</param>
-    /// <returns></returns>
     private TextStep GetTextStep(string stepName)
     {
         return _dictTextSteps[stepName];
     }
     
+    private RightAnswerStep GetRightAnwerStep(string stepName)
+    {
+        return  _dictRightAnswerSteps[stepName];
+    }
+    
     /// <summary>
     /// Получить выбранный уровень(для общего доступа)
     /// </summary>
-    /// <returns></returns>
     public Level GetSelectedLevel()
     {
         return selectedLvl;
@@ -81,12 +86,17 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void ActivateStep()
     {
+        GamesManager.Instance.CloseAllMenu();
         selectedStep = selectedLvl.levelSteps[stepIdx];
         switch (selectedStep.lvlType)
         {
             case Enums.LevelType.TextLevel:
                 TextStep textStep = GetTextStep(selectedStep.stepName);
                 GamesManager.Instance.ActivateLvlInfoMenu(textStep);
+                break;
+            case Enums.LevelType.RightAnswerLevel:
+                RightAnswerStep answerStep = GetRightAnwerStep(selectedStep.stepName);
+                GamesManager.Instance.ActivateRightAnswerMenu(answerStep);
                 break;
         }
     }
