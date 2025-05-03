@@ -31,3 +31,10 @@ public class Answer
     [TextArea(0, 10)] public string argumentAnswer;
     public bool answerIsRight;
 }
+
+[System.Serializable]
+public class PictureStep
+{
+    public string stepName;
+    public Sprite firstPicture, secondPicture;
+}

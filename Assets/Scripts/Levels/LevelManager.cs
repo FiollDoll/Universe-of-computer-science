@@ -19,11 +19,12 @@ public class LevelManager : MonoBehaviour
     public List<Theme> themes = new List<Theme>();
     public List<TextStep> textSteps = new List<TextStep>();
     public List<RightAnswerStep> rightAnswerSteps = new List<RightAnswerStep>();
-
+    public List<PictureStep> pictureSteps = new List<PictureStep>();
 
     private readonly Dictionary<string, Theme> _dictAllThemes = new Dictionary<string, Theme>();
     private readonly Dictionary<string, TextStep> _dictTextSteps = new Dictionary<string, TextStep>();
     private readonly Dictionary<string, RightAnswerStep> _dictRightAnswerSteps = new Dictionary<string, RightAnswerStep>();
+    private readonly Dictionary<string, PictureStep> _dictPictureSteps = new Dictionary<string, PictureStep>();
 
     private void Awake()
     {
@@ -46,6 +47,8 @@ public class LevelManager : MonoBehaviour
         foreach (RightAnswerStep step in rightAnswerSteps)
             _dictRightAnswerSteps.Add(step.stepName, step);
         
+        foreach (PictureStep step in pictureSteps)
+            _dictPictureSteps.Add(step.stepName, step);
     }
     
     private TextStep GetTextStep(string stepName)
@@ -56,6 +59,11 @@ public class LevelManager : MonoBehaviour
     private RightAnswerStep GetRightAnwerStep(string stepName)
     {
         return  _dictRightAnswerSteps[stepName];
+    }
+
+    private PictureStep GetPictureStep(string stepName)
+    {
+        return _dictPictureSteps[stepName];
     }
     
     /// <summary>
@@ -94,6 +102,10 @@ public class LevelManager : MonoBehaviour
             case Enums.LevelType.RightAnswerLevel:
                 RightAnswerStep answerStep = GetRightAnwerStep(_selectedStep.stepName);
                 GamesManager.Instance.ActivateRightAnswerMenu(answerStep);
+                break;
+            case Enums.LevelType.PictureLevel:
+                PictureStep pictureStep = GetPictureStep(_selectedStep.stepName);
+                GamesManager.Instance.ActivatePictureMenu(pictureStep);
                 break;
         }
     }

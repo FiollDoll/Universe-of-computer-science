@@ -17,16 +17,23 @@ public class GamesManager : MonoBehaviour
     // LevelType - TextLevel
     [Header("TextLevel")]
     [SerializeField] private GameObject lvlInfoMenu;
+    
     [SerializeField] private TextMeshProUGUI lvlInfo;
     [SerializeField] private Image lvlImage;
     
-    // LevelType - RightAnswer
+    // LevelType - RightAnswerLevel
     [Header("RightAnswerLevel")] 
     [SerializeField] private GameObject rightAnswerMenu;
 
     [SerializeField] private GameObject answerInfoMenu;
     [SerializeField] private GameObject answerButtonPrefab, answerContainer;
     [SerializeField] private TextMeshProUGUI textQuestion, textInAnswerInfo;
+    
+    // LevelType - PictureLevel
+    [Header("PictureLevel")]
+    [SerializeField] private GameObject pictureMenu;
+
+    [SerializeField] private GameObject firstStyle, secondStyle;
     
     private void Awake() => Instance = this;
 
@@ -114,6 +121,24 @@ public class GamesManager : MonoBehaviour
             GenerateAnswers();
         
         answerInfoMenu.SetActive(false);
+    }
+
+    public void ActivatePictureMenu(PictureStep pictureStep)
+    {
+        pictureMenu.SetActive(true);
+        secondStyle.SetActive(false);
+        firstStyle.SetActive(false);
+        if (pictureStep.secondPicture != null) // Значит второй стиль
+        {
+            secondStyle.SetActive(true);
+            secondStyle.transform.Find("Image").GetComponent<Image>().sprite = pictureStep.firstPicture;
+            secondStyle.transform.Find("Image1").GetComponent<Image>().sprite = pictureStep.secondPicture;
+        }
+        else
+        {
+            firstStyle.SetActive(true);
+            firstStyle.transform.Find("Image").GetComponent<Image>().sprite = pictureStep.firstPicture;
+        }
     }
     
     /// <summary>
