@@ -39,3 +39,37 @@ public class PictureStep
     public string stepName;
     public Sprite firstPicture, secondPicture;
 }
+
+[System.Serializable]
+public class GiveNameByPictureStep
+{
+    public string stepName;
+    public List<PictureAndName> picturesAndNames = new List<PictureAndName>();
+    
+    /// <summary>
+    /// Проверка - завершены ли все вопросы?
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckEndAllQuestions()
+    {
+        bool allQuestionsEnd = true;
+        foreach (PictureAndName pictureAndName in picturesAndNames)
+        {
+            if (!pictureAndName.end)
+            {
+                allQuestionsEnd = false;
+                break;
+            }
+        }
+
+        return allQuestionsEnd;
+    }
+}
+
+[System.Serializable]
+public class PictureAndName
+{
+    public string thingName;
+    public Sprite thingPicture;
+    public bool end;
+}

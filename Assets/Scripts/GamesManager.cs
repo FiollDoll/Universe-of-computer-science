@@ -8,6 +8,7 @@ public class GamesManager : MonoBehaviour
     public static GamesManager Instance { get; private set; }
     private Level _selectedLvl;
     private RightAnswerStep _selectedRAS;
+    private GiveNameByPictureStep _selectedGNBPS;
 
     // Сцена игры
     [Header("Main")] 
@@ -34,7 +35,13 @@ public class GamesManager : MonoBehaviour
     [SerializeField] private GameObject pictureMenu;
 
     [SerializeField] private GameObject firstStyle, secondStyle;
+    
+    // LevelType - GiveNameByPictureLevel
+    [Header("GiveNameByPictureLevel")] [SerializeField]
+    private GameObject GiveNameByPictureMenu;
 
+    [SerializeField] private GameObject questionPrefab, questionsContainer;
+    
     private void Awake() => Instance = this;
 
     private void Start()
@@ -49,6 +56,8 @@ public class GamesManager : MonoBehaviour
     {
         lvlInfoMenu.SetActive(false);
         rightAnswerMenu.SetActive(false);
+        pictureMenu.SetActive(false);
+        GiveNameByPictureMenu.SetActive(false);
     }
 
     /// <summary>
@@ -156,6 +165,59 @@ public class GamesManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Открытие меню из типа GiveNameByPictureLevel
+    /// </summary>
+    /// <param name="giveName"></param>
+    public void ActivateGiveNameByPictureMenu(GiveNameByPictureStep giveName)
+    {
+        GiveNameByPictureMenu.SetActive(true);
+        buttonNext.interactable = false;
+        _selectedGNBPS = giveName;
+        
+        System.Random rng = new System.Random();
+
+        // Рандомно перемешиваем
+        int n = _selectedGNBPS.picturesAndNames.Count;
+
+        while (n > 1)
+        {
+            int k = rng.Next(n--);
+            (_selectedGNBPS.picturesAndNames[n], _selectedGNBPS.picturesAndNames[k]) = (_selectedGNBPS.picturesAndNames[k],_selectedGNBPS.picturesAndNames[n]);
+        }
+
+        GenerateQuestionsToPicture();
+    }
+
+    public void GenerateQuestionsToPicture()
+    {
+        foreach (Transform child in questionsContainer.transform)
+            Destroy(child.gameObject);
+        
+        foreach (PictureAndName pictureAndName in _selectedGNBPS.picturesAndNames)
+        {
+            GameObject obj = Instantiate(questionPrefab, Vector3.zero, Quaternion.identity,
+                questionsContainer.transform);
+
+            obj.GetComponent<Image>().sprite = pictureAndName.thingPicture;
+            PictureAndName totalPictureAndName = pictureAndName;
+            obj.transform.Find("ButtonCheck").GetComponent<Button>().onClick.AddListener(() => CheckQuestion(obj, totalPictureAndName));
+        }
+    }
+
+    private void CheckQuestion(GameObject obj, PictureAndName pictureAndName)
+    {
+        if (pictureAndName.thingName == obj.transform.Find("InputField").GetComponent<TMP_InputField>().text)
+        {
+            pictureAndName.end = true;
+            obj.transform.Find("ButtonCheck").GetComponent<Button>().interactable = false;
+            obj.transform.Find("InputField").GetComponent<TMP_InputField>().interactable = false;
+        }
+
+        if (_selectedGNBPS.CheckEndAllQuestions())
+            buttonNext.interactable = true;
+    }
+    
     /// <summary>
     /// Обновление кнопок вперёд - назад
     /// </summary>

@@ -16,7 +16,6 @@ public class Enums
     {
         TextLevel,
         PictureLevel,
-        VideoLevel,
         RightAnswerLevel,
         WiresLevel,
         GiveNameByPictureLevel,

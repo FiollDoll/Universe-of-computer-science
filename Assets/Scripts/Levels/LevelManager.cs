@@ -19,6 +19,8 @@ public class LevelManager : MonoBehaviour
     public List<TextStep> textSteps = new List<TextStep>();
     public List<RightAnswerStep> rightAnswerSteps = new List<RightAnswerStep>();
     public List<PictureStep> pictureSteps = new List<PictureStep>();
+    public List<GiveNameByPictureStep> giveNameSteps = new List<GiveNameByPictureStep>();
+
 
     private readonly Dictionary<string, Theme> _dictAllThemes = new Dictionary<string, Theme>();
     private readonly Dictionary<string, TextStep> _dictTextSteps = new Dictionary<string, TextStep>();
@@ -27,6 +29,7 @@ public class LevelManager : MonoBehaviour
         new Dictionary<string, RightAnswerStep>();
 
     private readonly Dictionary<string, PictureStep> _dictPictureSteps = new Dictionary<string, PictureStep>();
+    private readonly Dictionary<string, GiveNameByPictureStep> _dictGiveNameSteps = new Dictionary<string, GiveNameByPictureStep>();
 
     private void Awake()
     {
@@ -51,6 +54,9 @@ public class LevelManager : MonoBehaviour
 
         foreach (PictureStep step in pictureSteps)
             _dictPictureSteps.Add(step.stepName, step);
+        
+        foreach (GiveNameByPictureStep step in giveNameSteps)
+            _dictGiveNameSteps.Add(step.stepName, step);
     }
 
     private TextStep GetTextStep(string stepName)
@@ -66,6 +72,11 @@ public class LevelManager : MonoBehaviour
     private PictureStep GetPictureStep(string stepName)
     {
         return _dictPictureSteps[stepName];
+    }
+    
+    private GiveNameByPictureStep GetGiveNameStep(string stepName)
+    {
+        return _dictGiveNameSteps[stepName];
     }
 
     /// <summary>
@@ -108,6 +119,10 @@ public class LevelManager : MonoBehaviour
             case Enums.LevelType.PictureLevel:
                 PictureStep pictureStep = GetPictureStep(_selectedStep.stepName);
                 GamesManager.Instance.ActivatePictureMenu(pictureStep);
+                break;
+            case Enums.LevelType.GiveNameByPictureLevel:
+                GiveNameByPictureStep giveNameStep = GetGiveNameStep(_selectedStep.stepName);
+                GamesManager.Instance.ActivateGiveNameByPictureMenu(giveNameStep);
                 break;
         }
     }
