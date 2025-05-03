@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -21,7 +22,7 @@ public class RightAnswerStep
 {
     public string stepName;
     public string textQuestion;
-    public Answer[] answers = new Answer[0];
+    public List<Answer> answers = new List<Answer>();
 }
 
 [System.Serializable]

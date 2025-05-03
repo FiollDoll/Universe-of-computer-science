@@ -5,22 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class GamesManager : MonoBehaviour
 {
-    public static GamesManager Instance {get; private set;}
+    public static GamesManager Instance { get; private set; }
     private Level _selectedLvl;
     private RightAnswerStep _selectedRAS;
 
     // Сцена игры
-    [Header("Main")]
+    [Header("Main")] 
     [SerializeField] private TextMeshProUGUI textLvlName;
     [SerializeField] private Button buttonNext, buttonBack;
 
     // LevelType - TextLevel
-    [Header("TextLevel")]
+    [Header("TextLevel")] 
     [SerializeField] private GameObject lvlInfoMenu;
-    
+
     [SerializeField] private TextMeshProUGUI lvlInfo;
     [SerializeField] private Image lvlImage;
-    
+
     // LevelType - RightAnswerLevel
     [Header("RightAnswerLevel")] 
     [SerializeField] private GameObject rightAnswerMenu;
@@ -28,13 +28,13 @@ public class GamesManager : MonoBehaviour
     [SerializeField] private GameObject answerInfoMenu;
     [SerializeField] private GameObject answerButtonPrefab, answerContainer;
     [SerializeField] private TextMeshProUGUI textQuestion, textInAnswerInfo;
-    
+
     // LevelType - PictureLevel
-    [Header("PictureLevel")]
+    [Header("PictureLevel")] 
     [SerializeField] private GameObject pictureMenu;
 
     [SerializeField] private GameObject firstStyle, secondStyle;
-    
+
     private void Awake() => Instance = this;
 
     private void Start()
@@ -50,7 +50,7 @@ public class GamesManager : MonoBehaviour
         lvlInfoMenu.SetActive(false);
         rightAnswerMenu.SetActive(false);
     }
-    
+
     /// <summary>
     /// Открытие меню из типа TextLevel
     /// </summary>
@@ -61,7 +61,7 @@ public class GamesManager : MonoBehaviour
         lvlInfo.text = textStep.textDescription;
         lvlImage.sprite = textStep.image;
     }
-    
+
     /// <summary>
     /// Открытие меню из типа RightAnswerLevel
     /// </summary>
@@ -72,33 +72,44 @@ public class GamesManager : MonoBehaviour
         buttonNext.interactable = false;
         textQuestion.text = rightAnswerStep.textQuestion;
         _selectedRAS = rightAnswerStep;
-        
+        System.Random rng = new System.Random();
+
+        // Рандомно перемешиваем
+        int n = _selectedRAS.answers.Count;
+
+        while (n > 1)
+        {
+            int k = rng.Next(n--);
+            (_selectedRAS.answers[n], _selectedRAS.answers[k]) = (_selectedRAS.answers[k], _selectedRAS.answers[n]);
+        }
+
         GenerateAnswers();
     }
-    
+
     /// <summary>
     /// Генерируем ответы
     /// </summary>
-    public void GenerateAnswers()
+    private void GenerateAnswers()
     {
         foreach (Transform child in answerContainer.transform)
             Destroy(child.gameObject);
-            
+
         foreach (Answer answer in _selectedRAS.answers)
         {
             GameObject newButtonAnswer = Instantiate(answerButtonPrefab, Vector3.zero, Quaternion.identity,
-                answerContainer.transform); 
+                answerContainer.transform);
             newButtonAnswer.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = answer.answerText;
             Answer newAnswer = answer;
             newButtonAnswer.GetComponent<Button>().onClick.AddListener(() => ChoiceAnswer(newAnswer));
-            
+
             // Если уже проверено
             if (buttonNext.interactable)
-                newButtonAnswer.GetComponent<Image>().color = answer.answerIsRight ? 
-                    new Color(179f / 255f, 252f / 255f, 176f / 255f) : new Color(252f / 255f, 176f / 255f, 176f / 255f);
+                newButtonAnswer.GetComponent<Image>().color = answer.answerIsRight
+                    ? new Color(179f / 255f, 252f / 255f, 176f / 255f)
+                    : new Color(252f / 255f, 176f / 255f, 176f / 255f);
         }
     }
-    
+
     /// <summary>
     /// Выбор любого ответа, а после проверка - правильный или нет
     /// </summary>
@@ -119,10 +130,14 @@ public class GamesManager : MonoBehaviour
         // Ответили мы правильно или нет
         if (!buttonNext.interactable)
             GenerateAnswers();
-        
+
         answerInfoMenu.SetActive(false);
     }
 
+    /// <summary>
+    /// Открытие меню из типа PictureLevel
+    /// </summary>
+    /// <param name="pictureStep"></param>
     public void ActivatePictureMenu(PictureStep pictureStep)
     {
         pictureMenu.SetActive(true);
@@ -140,7 +155,7 @@ public class GamesManager : MonoBehaviour
             firstStyle.transform.Find("Image").GetComponent<Image>().sprite = pictureStep.firstPicture;
         }
     }
-    
+
     /// <summary>
     /// Обновление кнопок вперёд - назад
     /// </summary>
@@ -155,7 +170,7 @@ public class GamesManager : MonoBehaviour
 
         return buttonNext.interactable; // Можно ли дальше?
     }
-    
+
     /// <summary>
     /// Передвижение кнопками вперёд - назад
     /// </summary>

@@ -301,6 +301,7 @@ MonoBehaviour:
     - answerText: "\u0412\u044B\u0440\u0443\u0431\u0430\u0439 \u0438\u043D\u0442\u0435\u0440\u043D\u0435\u0442"
       argumentAnswer: "\u041D\u0435\u0442 \u043D\u0435 \u0431\u0443\u0434\u0443"
       answerIsRight: 0
+  pictureSteps: []
 --- !u!1 &183249128
 GameObject:
   m_ObjectHideFlags: 0

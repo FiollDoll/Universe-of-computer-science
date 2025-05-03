@@ -1,20 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Collections.Generic;
 
 public class MenuManager : MonoBehaviour
 {
-    [Header("UI")]
-    [SerializeField] private GameObject[] allMenu = new GameObject[0];
+    [Header("UI")] [SerializeField] private GameObject[] allMenu = new GameObject[0];
     [SerializeField] private GameObject pageWithThemes, levelInfoMenu;
     [SerializeField] private AdaptiveScrollView scrollViewThemes;
     [SerializeField] private Transform blocksThemeParent;
     [SerializeField] private TextMeshProUGUI textLvlName, textThemeName, textDescription;
     [SerializeField] private Button buttonStartLvl;
 
-    [Header("Prefabs")]
-    [SerializeField] private GameObject blockThemePrefab;
+    [Header("Prefabs")] [SerializeField] private GameObject blockThemePrefab;
     [SerializeField] private GameObject buttonLevelPrefab;
 
     private GameObject _selectedMenuOfThemes;
@@ -37,29 +34,32 @@ public class MenuManager : MonoBehaviour
     {
         foreach (Transform child in blocksThemeParent)
             Destroy(child.gameObject);
-        
+
         foreach (Theme theme in LevelManager.Instance.themes)
         {
             if ((Enums.Category)mode != theme.themeCategory) continue;
-            
+
             var block = Instantiate(blockThemePrefab, Vector3.zero, Quaternion.identity, blocksThemeParent);
             block.transform.Find("TextTheme").GetComponent<TextMeshProUGUI>().text = theme.nameOfTheme;
             foreach (Level lvl in theme.levelsInTheme)
             {
-                var lvlBlock = Instantiate(buttonLevelPrefab, Vector3.zero, Quaternion.identity, block.transform.Find("buttonsGrid").transform);
+                var lvlBlock = Instantiate(buttonLevelPrefab, Vector3.zero, Quaternion.identity,
+                    block.transform.Find("buttonsGrid").transform);
                 lvlBlock.transform.Find("TextName").GetComponent<TextMeshProUGUI>().text = lvl.nameOfLevel;
                 // Для кнопки
                 Theme selectedTheme = theme;
                 Level selectedLvl = lvl;
-                lvlBlock.GetComponent<Button>().onClick.AddListener(() => ChoiceLevelToInfo(selectedTheme, selectedLvl));
+                lvlBlock.GetComponent<Button>().onClick
+                    .AddListener(() => ChoiceLevelToInfo(selectedTheme, selectedLvl));
             }
         }
+
         scrollViewThemes.UpdateContentSize();
     }
 
     public void OpenMenu(GameObject menuObj) => ChangePage(menuObj);
 
-    public void OpenLvlMenu(int mode) =>  OpenPageWithGames(mode);
+    public void OpenLvlMenu(int mode) => OpenPageWithGames(mode);
 
     public void ChoiceLevelToInfo(Theme theme, Level lvl)
     {
