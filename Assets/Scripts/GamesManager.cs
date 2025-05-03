@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public class GamesManager : MonoBehaviour
 {
     public static GamesManager Instance {get; private set;}
-    private Level selectedLvl;
-    private RightAnswerStep selectedRAS;
+    private Level _selectedLvl;
+    private RightAnswerStep _selectedRAS;
 
     // Сцена игры
     [Header("Main")]
@@ -27,14 +27,13 @@ public class GamesManager : MonoBehaviour
     [SerializeField] private GameObject answerInfoMenu;
     [SerializeField] private GameObject answerButtonPrefab, answerContainer;
     [SerializeField] private TextMeshProUGUI textQuestion, textInAnswerInfo;
-    private Color rightColor, wrongColor;
     
     private void Awake() => Instance = this;
 
     private void Start()
     {
-        selectedLvl = LevelManager.Instance.GetSelectedLevel();
-        textLvlName.text = selectedLvl.nameOfLevel;
+        _selectedLvl = LevelManager.Instance.GetSelectedLevel();
+        textLvlName.text = _selectedLvl.nameOfLevel;
         LevelManager.Instance.ActivateStep();
         UpdateButtonNextAndBack();
     }
@@ -65,7 +64,7 @@ public class GamesManager : MonoBehaviour
         rightAnswerMenu.SetActive(true);
         buttonNext.interactable = false;
         textQuestion.text = rightAnswerStep.textQuestion;
-        selectedRAS = rightAnswerStep;
+        _selectedRAS = rightAnswerStep;
         
         GenerateAnswers();
     }
@@ -78,7 +77,7 @@ public class GamesManager : MonoBehaviour
         foreach (Transform child in answerContainer.transform)
             Destroy(child.gameObject);
             
-        foreach (Answer answer in selectedRAS.answers)
+        foreach (Answer answer in _selectedRAS.answers)
         {
             GameObject newButtonAnswer = Instantiate(answerButtonPrefab, Vector3.zero, Quaternion.identity,
                 answerContainer.transform); 
@@ -124,7 +123,7 @@ public class GamesManager : MonoBehaviour
     {
         buttonNext.interactable = true;
         buttonBack.interactable = true;
-        if (LevelManager.Instance.stepIdx == (selectedLvl.levelSteps.Length - 1))
+        if (LevelManager.Instance.stepIdx == (_selectedLvl.levelSteps.Length - 1))
             buttonNext.interactable = false;
         if (LevelManager.Instance.stepIdx == 0)
             buttonBack.interactable = false;

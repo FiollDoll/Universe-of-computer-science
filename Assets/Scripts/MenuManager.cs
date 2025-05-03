@@ -40,19 +40,18 @@ public class MenuManager : MonoBehaviour
         
         foreach (Theme theme in LevelManager.Instance.themes)
         {
-            if ((Enums.Category)mode == theme.themeCategory)
+            if ((Enums.Category)mode != theme.themeCategory) continue;
+            
+            var block = Instantiate(blockThemePrefab, Vector3.zero, Quaternion.identity, blocksThemeParent);
+            block.transform.Find("TextTheme").GetComponent<TextMeshProUGUI>().text = theme.nameOfTheme;
+            foreach (Level lvl in theme.levelsInTheme)
             {
-                var block = Instantiate(blockThemePrefab, Vector3.zero, Quaternion.identity, blocksThemeParent);
-                block.transform.Find("TextTheme").GetComponent<TextMeshProUGUI>().text = theme.nameOfTheme;
-                foreach (Level lvl in theme.levelsInTheme)
-                {
-                    var lvlBlock = Instantiate(buttonLevelPrefab, Vector3.zero, Quaternion.identity, block.transform.Find("buttonsGrid").transform);
-                    lvlBlock.transform.Find("TextName").GetComponent<TextMeshProUGUI>().text = lvl.nameOfLevel;
-                    // Для кнопки
-                    Theme selectedTheme = theme;
-                    Level selectedLvl = lvl;
-                    lvlBlock.GetComponent<Button>().onClick.AddListener(() => ChoiceLevelToInfo(selectedTheme, selectedLvl));
-                }
+                var lvlBlock = Instantiate(buttonLevelPrefab, Vector3.zero, Quaternion.identity, block.transform.Find("buttonsGrid").transform);
+                lvlBlock.transform.Find("TextName").GetComponent<TextMeshProUGUI>().text = lvl.nameOfLevel;
+                // Для кнопки
+                Theme selectedTheme = theme;
+                Level selectedLvl = lvl;
+                lvlBlock.GetComponent<Button>().onClick.AddListener(() => ChoiceLevelToInfo(selectedTheme, selectedLvl));
             }
         }
         scrollViewThemes.UpdateContentSize();

@@ -9,9 +9,9 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance {get; private set;}
     
     // Выбранное. Быстрый доступ
-    private Theme selectedTheme;
-    private Level selectedLvl;
-    private LevelStep selectedStep;
+    private Theme _selectedTheme;
+    private Level _selectedLvl;
+    private LevelStep _selectedStep;
     public int stepIdx;
     
     // Темы и уровни
@@ -21,9 +21,9 @@ public class LevelManager : MonoBehaviour
     public List<RightAnswerStep> rightAnswerSteps = new List<RightAnswerStep>();
 
 
-    private Dictionary<string, Theme> _dictAllThemes = new Dictionary<string, Theme>();
-    private Dictionary<string, TextStep> _dictTextSteps = new Dictionary<string, TextStep>();
-    private Dictionary<string, RightAnswerStep> _dictRightAnswerSteps = new Dictionary<string, RightAnswerStep>();
+    private readonly Dictionary<string, Theme> _dictAllThemes = new Dictionary<string, Theme>();
+    private readonly Dictionary<string, TextStep> _dictTextSteps = new Dictionary<string, TextStep>();
+    private readonly Dictionary<string, RightAnswerStep> _dictRightAnswerSteps = new Dictionary<string, RightAnswerStep>();
 
     private void Awake()
     {
@@ -63,7 +63,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public Level GetSelectedLevel()
     {
-        return selectedLvl;
+        return _selectedLvl;
     }
     
     /// <summary>
@@ -73,12 +73,9 @@ public class LevelManager : MonoBehaviour
     /// <param name="lvl"></param>
     public void ActivateLevel(Theme theme, Level lvl)
     {
-        selectedTheme = theme;
-        selectedLvl = lvl;
-        if (theme.themeCategory == Enums.Category.FirstToFourthClass)
-            SceneManager.LoadScene(1);
-        else
-            SceneManager.LoadScene(2);
+        _selectedTheme = theme;
+        _selectedLvl = lvl;
+        SceneManager.LoadScene(1);
     }
     
     /// <summary>
@@ -87,15 +84,15 @@ public class LevelManager : MonoBehaviour
     public void ActivateStep()
     {
         GamesManager.Instance.CloseAllMenu();
-        selectedStep = selectedLvl.levelSteps[stepIdx];
-        switch (selectedStep.lvlType)
+        _selectedStep = _selectedLvl.levelSteps[stepIdx];
+        switch (_selectedStep.lvlType)
         {
             case Enums.LevelType.TextLevel:
-                TextStep textStep = GetTextStep(selectedStep.stepName);
+                TextStep textStep = GetTextStep(_selectedStep.stepName);
                 GamesManager.Instance.ActivateLvlInfoMenu(textStep);
                 break;
             case Enums.LevelType.RightAnswerLevel:
-                RightAnswerStep answerStep = GetRightAnwerStep(selectedStep.stepName);
+                RightAnswerStep answerStep = GetRightAnwerStep(_selectedStep.stepName);
                 GamesManager.Instance.ActivateRightAnswerMenu(answerStep);
                 break;
         }
