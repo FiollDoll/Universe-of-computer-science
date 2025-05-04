@@ -22,6 +22,7 @@ public class LevelManager : MonoBehaviour
     public List<PictureStep> pictureSteps = new List<PictureStep>();
     public List<GiveNameByPictureStep> giveNameSteps = new List<GiveNameByPictureStep>();
     public List<LogicStep> logicSteps = new List<LogicStep>();
+    public List<ExecutorStep> executorSteps = new List<ExecutorStep>();
 
 
     private readonly Dictionary<string, Theme> _dictAllThemes = new Dictionary<string, Theme>();
@@ -33,6 +34,7 @@ public class LevelManager : MonoBehaviour
     private readonly Dictionary<string, PictureStep> _dictPictureSteps = new Dictionary<string, PictureStep>();
     private readonly Dictionary<string, GiveNameByPictureStep> _dictGiveNameSteps = new Dictionary<string, GiveNameByPictureStep>();
     private readonly Dictionary<string, LogicStep> _dictLogicSteps = new Dictionary<string, LogicStep>();
+    private readonly Dictionary<string, ExecutorStep> _dictExecutorSteps = new Dictionary<string, ExecutorStep>();
 
     private void Awake()
     {
@@ -60,34 +62,26 @@ public class LevelManager : MonoBehaviour
         
         foreach (GiveNameByPictureStep step in giveNameSteps)
             _dictGiveNameSteps.Add(step.stepName, step);
+        
         foreach (LogicStep step in logicSteps)
             _dictLogicSteps.Add(step.stepName, step);
+        
+        foreach (ExecutorStep step in executorSteps)
+            _dictExecutorSteps.Add(step.stepName, step);
     }
 
-    private TextStep GetTextStep(string stepName)
-    {
-        return _dictTextSteps[stepName];
-    }
-
-    private RightAnswerStep GetRightAnwerStep(string stepName)
-    {
-        return _dictRightAnswerSteps[stepName];
-    }
-
-    private PictureStep GetPictureStep(string stepName)
-    {
-        return _dictPictureSteps[stepName];
-    }
+    private TextStep GetTextStep(string stepName) => _dictTextSteps[stepName];
     
-    private GiveNameByPictureStep GetGiveNameStep(string stepName)
-    {
-        return _dictGiveNameSteps[stepName];
-    }
+    private RightAnswerStep GetRightAnswerStep(string stepName) => _dictRightAnswerSteps[stepName];
     
-    private LogicStep GetLogicStep(string stepName)
-    {
-        return _dictLogicSteps[stepName];
-    }
+    private PictureStep GetPictureStep(string stepName) => _dictPictureSteps[stepName];
+    
+    private GiveNameByPictureStep GetGiveNameStep(string stepName) => _dictGiveNameSteps[stepName];
+    
+    private LogicStep GetLogicStep(string stepName) => _dictLogicSteps[stepName];
+    
+    private ExecutorStep GetExecutorStep(string stepName) => _dictExecutorSteps[stepName];
+    
 
     /// <summary>
     /// Получить выбранный уровень(для общего доступа)
@@ -123,7 +117,7 @@ public class LevelManager : MonoBehaviour
                 GamesManager.Instance.ActivateLvlInfoMenu(textStep);
                 break;
             case Enums.LevelType.RightAnswerLevel:
-                RightAnswerStep answerStep = GetRightAnwerStep(_selectedStep.stepName);
+                RightAnswerStep answerStep = GetRightAnswerStep(_selectedStep.stepName);
                 GamesManager.Instance.ActivateRightAnswerMenu(answerStep);
                 break;
             case Enums.LevelType.PictureLevel:
@@ -137,6 +131,10 @@ public class LevelManager : MonoBehaviour
             case Enums.LevelType.LogicLevel:
                 LogicStep logicStep = GetLogicStep(_selectedStep.stepName);
                 GamesManager.Instance.ActivateLogicMenu(logicStep);
+                break;
+            case Enums.LevelType.ExecutorLevel:
+                ExecutorStep executorStep = GetExecutorStep(_selectedStep.stepName);
+                GamesManager.Instance.ActivateExecutorMenu(executorStep);
                 break;
         }
     }

@@ -88,3 +88,10 @@ public class LogicQuestion
     [TextArea(0, 10)] public string argumentQuestionTrue, argumentQuestionFalse;
     public bool trueOrFalse;
 }
+
+[System.Serializable]
+public class ExecutorStep
+{
+    public string stepName;
+    public GameObject mapPrefab;
+}

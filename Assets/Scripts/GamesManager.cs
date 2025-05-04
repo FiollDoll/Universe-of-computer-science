@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,43 +14,51 @@ public class GamesManager : MonoBehaviour
     private LogicStep _selectedLogicStep;
 
     // Сцена игры
-    [Header("Main")] 
-    [SerializeField] private TextMeshProUGUI textLvlName;
+    [Header("Main")] [SerializeField] private TextMeshProUGUI textLvlName;
     [SerializeField] private Button buttonNext, buttonBack;
 
     // LevelType - TextLevel
-    [Header("TextLevel")] 
-    [SerializeField] private GameObject lvlInfoMenu;
+    [Header("TextLevel")] [SerializeField] private GameObject lvlInfoMenu;
 
     [SerializeField] private TextMeshProUGUI lvlInfo;
     [SerializeField] private Image lvlImage;
 
     // LevelType - RightAnswerLevel
-    [Header("RightAnswerLevel")] 
-    [SerializeField] private GameObject rightAnswerMenu;
+    [Header("RightAnswerLevel")] [SerializeField]
+    private GameObject rightAnswerMenu;
 
     [SerializeField] private GameObject answerInfoMenu;
     [SerializeField] private GameObject answerButtonPrefab, answerContainer;
     [SerializeField] private TextMeshProUGUI textQuestion, textInAnswerInfo;
 
     // LevelType - PictureLevel
-    [Header("PictureLevel")] 
-    [SerializeField] private GameObject pictureMenu;
+    [Header("PictureLevel")] [SerializeField]
+    private GameObject pictureMenu;
 
     [SerializeField] private GameObject firstStyle, secondStyle;
-    
+
     // LevelType - GiveNameByPictureLevel
     [Header("GiveNameByPictureLevel")] [SerializeField]
     private GameObject GiveNameByPictureMenu;
 
     [SerializeField] private GameObject questionPrefab, questionsContainer;
-    
+
     // LevelType - LogicLevel
     [Header("LogicLevel")] [SerializeField]
     private GameObject logicMenu;
 
     [SerializeField] private TextMeshProUGUI textLogicQuestion;
-    
+
+    // LevelType - ExecutorLevel
+    [Header("ExecutorLevel")] [SerializeField]
+    private GameObject executorMenu;
+
+    [SerializeField] private GameObject mapPlace;
+    private Executor transporter;
+    public TextMeshProUGUI actionDisplay;
+    private List<string> actionList = new List<string>();
+    private float currentAngle = 0f; // Текущий угол направления
+
     private void Awake() => Instance = this;
 
     private void Start()
@@ -59,16 +69,41 @@ public class GamesManager : MonoBehaviour
         UpdateButtonNextAndBack();
     }
 
+    /// <summary>
+    /// Обновление кнопок вперёд - назад
+    /// </summary>
+    public bool UpdateButtonNextAndBack()
+    {
+        buttonNext.interactable = true;
+        buttonBack.interactable = true;
+        if (LevelManager.Instance.stepIdx == (_selectedLvl.levelSteps.Length - 1))
+            buttonNext.interactable = false;
+        if (LevelManager.Instance.stepIdx == 0)
+            buttonBack.interactable = false;
+
+        return buttonNext.interactable; // Можно ли дальше?
+    }
+
+    /// <summary>
+    /// Передвижение кнопками вперёд - назад
+    /// </summary>
+    /// <param name="modif"></param>
+    public void MoveOnSteps(int modif)
+    {
+        LevelManager.Instance.stepIdx += modif;
+        LevelManager.Instance.ActivateStep();
+        UpdateButtonNextAndBack();
+    }
+
+    public void ExitFromLvl() => SceneManager.LoadScene(0);
+
     private void OpenArgumentMenu(string text)
     {
         answerInfoMenu.SetActive(true);
         textInAnswerInfo.text = text;
     }
-    
-    public void CloseArgumentMenu()
-    {
-        answerInfoMenu.SetActive(false);
-    }
+
+    public void CloseArgumentMenu() => answerInfoMenu.SetActive(false);
 
     public void CloseAllMenu()
     {
@@ -77,7 +112,10 @@ public class GamesManager : MonoBehaviour
         pictureMenu?.SetActive(false);
         GiveNameByPictureMenu?.SetActive(false);
         logicMenu?.SetActive(false);
+        executorMenu?.SetActive(false);
     }
+
+    #region SimpleLevels
 
     /// <summary>
     /// Открытие меню из типа TextLevel
@@ -89,6 +127,32 @@ public class GamesManager : MonoBehaviour
         lvlInfo.text = textStep.textDescription;
         lvlImage.sprite = textStep.image;
     }
+
+    /// <summary>
+    /// Открытие меню из типа PictureLevel
+    /// </summary>
+    /// <param name="pictureStep"></param>
+    public void ActivatePictureMenu(PictureStep pictureStep)
+    {
+        pictureMenu.SetActive(true);
+        secondStyle.SetActive(false);
+        firstStyle.SetActive(false);
+        if (pictureStep.secondPicture != null) // Значит второй стиль
+        {
+            secondStyle.SetActive(true);
+            secondStyle.transform.Find("Image").GetComponent<Image>().sprite = pictureStep.firstPicture;
+            secondStyle.transform.Find("Image1").GetComponent<Image>().sprite = pictureStep.secondPicture;
+        }
+        else
+        {
+            firstStyle.SetActive(true);
+            firstStyle.transform.Find("Image").GetComponent<Image>().sprite = pictureStep.firstPicture;
+        }
+    }
+
+    #endregion
+
+    #region Right answer
 
     /// <summary>
     /// Открытие меню из типа RightAnswerLevel
@@ -147,28 +211,10 @@ public class GamesManager : MonoBehaviour
         if (answer.answerIsRight)
             GenerateAnswers(true);
     }
-    
-    /// <summary>
-    /// Открытие меню из типа PictureLevel
-    /// </summary>
-    /// <param name="pictureStep"></param>
-    public void ActivatePictureMenu(PictureStep pictureStep)
-    {
-        pictureMenu.SetActive(true);
-        secondStyle.SetActive(false);
-        firstStyle.SetActive(false);
-        if (pictureStep.secondPicture != null) // Значит второй стиль
-        {
-            secondStyle.SetActive(true);
-            secondStyle.transform.Find("Image").GetComponent<Image>().sprite = pictureStep.firstPicture;
-            secondStyle.transform.Find("Image1").GetComponent<Image>().sprite = pictureStep.secondPicture;
-        }
-        else
-        {
-            firstStyle.SetActive(true);
-            firstStyle.transform.Find("Image").GetComponent<Image>().sprite = pictureStep.firstPicture;
-        }
-    }
+
+    #endregion
+
+    #region GiveNameByPicture
 
     /// <summary>
     /// Открытие меню из типа GiveNameByPictureLevel
@@ -178,7 +224,7 @@ public class GamesManager : MonoBehaviour
     {
         GiveNameByPictureMenu.SetActive(true);
         _selectedGNBPS = giveName;
-        
+
         System.Random rng = new System.Random();
 
         // Рандомно перемешиваем
@@ -187,7 +233,8 @@ public class GamesManager : MonoBehaviour
         while (n > 1)
         {
             int k = rng.Next(n--);
-            (_selectedGNBPS.picturesAndNames[n], _selectedGNBPS.picturesAndNames[k]) = (_selectedGNBPS.picturesAndNames[k],_selectedGNBPS.picturesAndNames[n]);
+            (_selectedGNBPS.picturesAndNames[n], _selectedGNBPS.picturesAndNames[k]) = (
+                _selectedGNBPS.picturesAndNames[k], _selectedGNBPS.picturesAndNames[n]);
         }
 
         GenerateQuestionsToPicture();
@@ -197,7 +244,7 @@ public class GamesManager : MonoBehaviour
     {
         foreach (Transform child in questionsContainer.transform)
             Destroy(child.gameObject);
-        
+
         foreach (PictureAndName pictureAndName in _selectedGNBPS.picturesAndNames)
         {
             GameObject obj = Instantiate(questionPrefab, Vector3.zero, Quaternion.identity,
@@ -205,7 +252,8 @@ public class GamesManager : MonoBehaviour
 
             obj.GetComponent<Image>().sprite = pictureAndName.thingPicture;
             PictureAndName totalPictureAndName = pictureAndName;
-            obj.transform.Find("ButtonCheck").GetComponent<Button>().onClick.AddListener(() => CheckQuestion(obj, totalPictureAndName));
+            obj.transform.Find("ButtonCheck").GetComponent<Button>().onClick
+                .AddListener(() => CheckQuestion(obj, totalPictureAndName));
         }
     }
 
@@ -218,6 +266,10 @@ public class GamesManager : MonoBehaviour
             obj.transform.Find("InputField").GetComponent<TMP_InputField>().interactable = false;
         }
     }
+
+    #endregion
+
+    #region LogicLevel
 
     public void ActivateLogicMenu(LogicStep logicStep)
     {
@@ -234,32 +286,69 @@ public class GamesManager : MonoBehaviour
             ? _selectedLogicStep.question.argumentQuestionTrue
             : _selectedLogicStep.question.argumentQuestionFalse);
     }
-    
-    /// <summary>
-    /// Обновление кнопок вперёд - назад
-    /// </summary>
-    public bool UpdateButtonNextAndBack()
-    {
-        buttonNext.interactable = true;
-        buttonBack.interactable = true;
-        if (LevelManager.Instance.stepIdx == (_selectedLvl.levelSteps.Length - 1))
-            buttonNext.interactable = false;
-        if (LevelManager.Instance.stepIdx == 0)
-            buttonBack.interactable = false;
 
-        return buttonNext.interactable; // Можно ли дальше?
+    #endregion
+
+    #region ExecutorLevel
+
+    public void ActivateExecutorMenu(ExecutorStep executorStep)
+    {
+        executorMenu.SetActive(true);
+        foreach (Transform child in mapPlace.transform)
+            Destroy(child.gameObject);
+
+        var obj = Instantiate(executorStep.mapPrefab, Vector3.zero, Quaternion.identity, mapPlace.transform);
+        transporter = obj?.transform.Find("executor").GetComponent<Executor>();
+        currentAngle = 0;
+        actionList = new List<string>();
+        UpdateActionDisplay();
     }
 
-    /// <summary>
-    /// Передвижение кнопками вперёд - назад
-    /// </summary>
-    /// <param name="modif"></param>
-    public void MoveOnSteps(int modif)
+    public void MoveExecutor(int mode)
     {
-        LevelManager.Instance.stepIdx += modif;
-        LevelManager.Instance.ActivateStep();
-        UpdateButtonNextAndBack();
+        Vector3 direction = Vector3.zero;
+        Vector3 rotation = Vector3.zero;
+
+        switch (mode)
+        {
+            case 0: // Вперёд
+                direction = Quaternion.Euler(0, 0, currentAngle) * Vector3.up;
+                break;
+            case 1: // Назад
+                direction = Quaternion.Euler(0, 0, currentAngle) * Vector3.down;
+                break;
+            case 2: // Влево
+                currentAngle += 90f;
+                rotation = new Vector3(0f, 0f, 90f);
+                direction = Vector3.zero;
+                break;
+            case 3: // Вправо
+                currentAngle -= 90f;
+                rotation = new Vector3(0f, 0f, -90f);
+                direction = Vector3.zero;
+                break;
+            default:
+                direction = Vector3.zero;
+                rotation = Vector3.zero;
+                break;
+        }
+
+        transporter.AddAction(direction);
+        transporter.AddActionRot(rotation);
+        actionList.Add(mode switch
+        {
+            0 => "Вперёд",
+            1 => "Назад",
+            2 => "Влево",
+            3 => "Вправо"
+        });
+
+        UpdateActionDisplay();
     }
 
-    public void ExitFromLvl() => SceneManager.LoadScene(0);
+    public void StartButton() => transporter.StartActions();
+
+    private void UpdateActionDisplay() => actionDisplay.text = string.Join(" > ", actionList);
+
+    #endregion
 }

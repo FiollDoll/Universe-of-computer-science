@@ -183,6 +183,8 @@ MonoBehaviour:
         lvlType: 3
       - stepName: fourth
         lvlType: 4
+      - stepName: fifth
+        lvlType: 5
     - nameOfLevel: "\u041F\u0440\u0430\u0432\u0438\u043B\u0430 \u043F\u043E\u0432\u0435\u0434\u0435\u043D\u0438\u044F
         \u0432 \u043A\u0430\u0431\u0438\u043D\u0435\u0442\u0435 \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0442\u0438\u043A\u0438"
       preiconOfLevel: {fileID: 0}
@@ -326,6 +328,9 @@ MonoBehaviour:
         \u044D\u0442\u043E \u043D\u0435 \u043F\u0442\u0438\u0446\u0430"
       argumentQuestionFalse: "\u0427\u0422\u041E"
       trueOrFalse: 0
+  executorSteps:
+  - stepName: fifth
+    mapPrefab: {fileID: 2622704622349880316, guid: fbe90c49b8cfa094695591b4346ec672, type: 3}
 --- !u!1 &183249128
 GameObject:
   m_ObjectHideFlags: 0
