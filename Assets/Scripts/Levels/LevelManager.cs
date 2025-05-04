@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class LevelManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class LevelManager : MonoBehaviour
     public List<RightAnswerStep> rightAnswerSteps = new List<RightAnswerStep>();
     public List<PictureStep> pictureSteps = new List<PictureStep>();
     public List<GiveNameByPictureStep> giveNameSteps = new List<GiveNameByPictureStep>();
+    public List<LogicStep> logicSteps = new List<LogicStep>();
 
 
     private readonly Dictionary<string, Theme> _dictAllThemes = new Dictionary<string, Theme>();
@@ -30,6 +32,7 @@ public class LevelManager : MonoBehaviour
 
     private readonly Dictionary<string, PictureStep> _dictPictureSteps = new Dictionary<string, PictureStep>();
     private readonly Dictionary<string, GiveNameByPictureStep> _dictGiveNameSteps = new Dictionary<string, GiveNameByPictureStep>();
+    private readonly Dictionary<string, LogicStep> _dictLogicSteps = new Dictionary<string, LogicStep>();
 
     private void Awake()
     {
@@ -57,6 +60,8 @@ public class LevelManager : MonoBehaviour
         
         foreach (GiveNameByPictureStep step in giveNameSteps)
             _dictGiveNameSteps.Add(step.stepName, step);
+        foreach (LogicStep step in logicSteps)
+            _dictLogicSteps.Add(step.stepName, step);
     }
 
     private TextStep GetTextStep(string stepName)
@@ -77,6 +82,11 @@ public class LevelManager : MonoBehaviour
     private GiveNameByPictureStep GetGiveNameStep(string stepName)
     {
         return _dictGiveNameSteps[stepName];
+    }
+    
+    private LogicStep GetLogicStep(string stepName)
+    {
+        return _dictLogicSteps[stepName];
     }
 
     /// <summary>
@@ -123,6 +133,10 @@ public class LevelManager : MonoBehaviour
             case Enums.LevelType.GiveNameByPictureLevel:
                 GiveNameByPictureStep giveNameStep = GetGiveNameStep(_selectedStep.stepName);
                 GamesManager.Instance.ActivateGiveNameByPictureMenu(giveNameStep);
+                break;
+            case Enums.LevelType.LogicLevel:
+                LogicStep logicStep = GetLogicStep(_selectedStep.stepName);
+                GamesManager.Instance.ActivateLogicMenu(logicStep);
                 break;
         }
     }

@@ -9,6 +9,7 @@ public class GamesManager : MonoBehaviour
     private Level _selectedLvl;
     private RightAnswerStep _selectedRAS;
     private GiveNameByPictureStep _selectedGNBPS;
+    private LogicStep _selectedLogicStep;
 
     // Сцена игры
     [Header("Main")] 
@@ -42,6 +43,12 @@ public class GamesManager : MonoBehaviour
 
     [SerializeField] private GameObject questionPrefab, questionsContainer;
     
+    // LevelType - LogicLevel
+    [Header("LogicLevel")] [SerializeField]
+    private GameObject logicMenu;
+
+    [SerializeField] private TextMeshProUGUI textLogicQuestion;
+    
     private void Awake() => Instance = this;
 
     private void Start()
@@ -52,12 +59,24 @@ public class GamesManager : MonoBehaviour
         UpdateButtonNextAndBack();
     }
 
+    private void OpenArgumentMenu(string text)
+    {
+        answerInfoMenu.SetActive(true);
+        textInAnswerInfo.text = text;
+    }
+    
+    public void CloseArgumentMenu()
+    {
+        answerInfoMenu.SetActive(false);
+    }
+
     public void CloseAllMenu()
     {
-        lvlInfoMenu.SetActive(false);
-        rightAnswerMenu.SetActive(false);
-        pictureMenu.SetActive(false);
-        GiveNameByPictureMenu.SetActive(false);
+        lvlInfoMenu?.SetActive(false);
+        rightAnswerMenu?.SetActive(false);
+        pictureMenu?.SetActive(false);
+        GiveNameByPictureMenu?.SetActive(false);
+        logicMenu?.SetActive(false);
     }
 
     /// <summary>
@@ -78,7 +97,6 @@ public class GamesManager : MonoBehaviour
     public void ActivateRightAnswerMenu(RightAnswerStep rightAnswerStep)
     {
         rightAnswerMenu.SetActive(true);
-        buttonNext.interactable = false;
         textQuestion.text = rightAnswerStep.textQuestion;
         _selectedRAS = rightAnswerStep;
         System.Random rng = new System.Random();
@@ -98,7 +116,7 @@ public class GamesManager : MonoBehaviour
     /// <summary>
     /// Генерируем ответы
     /// </summary>
-    private void GenerateAnswers()
+    private void GenerateAnswers(bool win = false)
     {
         foreach (Transform child in answerContainer.transform)
             Destroy(child.gameObject);
@@ -112,7 +130,7 @@ public class GamesManager : MonoBehaviour
             newButtonAnswer.GetComponent<Button>().onClick.AddListener(() => ChoiceAnswer(newAnswer));
 
             // Если уже проверено
-            if (buttonNext.interactable)
+            if (win)
                 newButtonAnswer.GetComponent<Image>().color = answer.answerIsRight
                     ? new Color(179f / 255f, 252f / 255f, 176f / 255f)
                     : new Color(252f / 255f, 176f / 255f, 176f / 255f);
@@ -125,24 +143,11 @@ public class GamesManager : MonoBehaviour
     /// <param name="idx"></param>
     public void ChoiceAnswer(Answer answer)
     {
-        answerInfoMenu.SetActive(true);
-        textInAnswerInfo.text = answer.argumentAnswer;
+        OpenArgumentMenu(answer.argumentAnswer);
         if (answer.answerIsRight)
-        {
-            buttonNext.interactable = true; // Активируем, т.к не может быть последним
-            GenerateAnswers();
-        }
+            GenerateAnswers(true);
     }
-
-    public void CloseAnswerInfoMenu()
-    {
-        // Ответили мы правильно или нет
-        if (!buttonNext.interactable)
-            GenerateAnswers();
-
-        answerInfoMenu.SetActive(false);
-    }
-
+    
     /// <summary>
     /// Открытие меню из типа PictureLevel
     /// </summary>
@@ -172,7 +177,6 @@ public class GamesManager : MonoBehaviour
     public void ActivateGiveNameByPictureMenu(GiveNameByPictureStep giveName)
     {
         GiveNameByPictureMenu.SetActive(true);
-        buttonNext.interactable = false;
         _selectedGNBPS = giveName;
         
         System.Random rng = new System.Random();
@@ -213,9 +217,22 @@ public class GamesManager : MonoBehaviour
             obj.transform.Find("ButtonCheck").GetComponent<Button>().interactable = false;
             obj.transform.Find("InputField").GetComponent<TMP_InputField>().interactable = false;
         }
+    }
 
-        if (_selectedGNBPS.CheckEndAllQuestions())
-            buttonNext.interactable = true;
+    public void ActivateLogicMenu(LogicStep logicStep)
+    {
+        logicMenu.SetActive(true);
+        textLogicQuestion.text = logicStep.question.question;
+        _selectedLogicStep = logicStep;
+        UpdateButtonNextAndBack();
+    }
+
+    public void CheckLogicAnswer(bool state)
+    {
+        bool win = state == _selectedLogicStep.question.trueOrFalse;
+        OpenArgumentMenu(win
+            ? _selectedLogicStep.question.argumentQuestionTrue
+            : _selectedLogicStep.question.argumentQuestionFalse);
     }
     
     /// <summary>

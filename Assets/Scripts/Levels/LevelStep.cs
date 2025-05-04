@@ -45,7 +45,7 @@ public class GiveNameByPictureStep
 {
     public string stepName;
     public List<PictureAndName> picturesAndNames = new List<PictureAndName>();
-    
+
     /// <summary>
     /// Проверка - завершены ли все вопросы?
     /// </summary>
@@ -71,5 +71,20 @@ public class PictureAndName
 {
     public string thingName;
     public Sprite thingPicture;
-    public bool end;
+    [HideInInspector] public bool end;
+}
+
+[System.Serializable]
+public class LogicStep
+{
+    public string stepName;
+    public LogicQuestion question;
+}
+
+[System.Serializable]
+public class LogicQuestion
+{
+    [TextArea(0, 10)] public string question;
+    [TextArea(0, 10)] public string argumentQuestionTrue, argumentQuestionFalse;
+    public bool trueOrFalse;
 }

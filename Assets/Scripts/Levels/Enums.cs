@@ -17,10 +17,8 @@ public class Enums
         TextLevel,
         PictureLevel,
         RightAnswerLevel,
-        WiresLevel,
         GiveNameByPictureLevel,
         LogicLevel,
-        ConveyorLevel,
         ExecutorLevel
     }
 }
