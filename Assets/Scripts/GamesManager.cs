@@ -54,10 +54,10 @@ public class GamesManager : MonoBehaviour
     private GameObject executorMenu;
 
     [SerializeField] private GameObject mapPlace;
-    private Executor transporter;
-    public TextMeshProUGUI actionDisplay;
-    private List<string> actionList = new List<string>();
-    private float currentAngle = 0f; // Текущий угол направления
+    private Executor _transporter;
+    [SerializeField] private TextMeshProUGUI actionDisplay, textResult;
+    private List<string> _actionList = new List<string>();
+    private float _currentAngle = 0f; // Текущий угол направления
 
     private void Awake() => Instance = this;
 
@@ -298,9 +298,9 @@ public class GamesManager : MonoBehaviour
             Destroy(child.gameObject);
 
         var obj = Instantiate(executorStep.mapPrefab, Vector3.zero, Quaternion.identity, mapPlace.transform);
-        transporter = obj?.transform.Find("executor").GetComponent<Executor>();
-        currentAngle = 0;
-        actionList = new List<string>();
+        _transporter = obj?.transform.Find("executor").GetComponent<Executor>();
+        _currentAngle = 0;
+        _actionList = new List<string>();
         UpdateActionDisplay();
     }
 
@@ -312,18 +312,18 @@ public class GamesManager : MonoBehaviour
         switch (mode)
         {
             case 0: // Вперёд
-                direction = Quaternion.Euler(0, 0, currentAngle) * Vector3.up;
+                direction = Quaternion.Euler(0, 0, _currentAngle) * Vector3.up;
                 break;
             case 1: // Назад
-                direction = Quaternion.Euler(0, 0, currentAngle) * Vector3.down;
+                direction = Quaternion.Euler(0, 0, _currentAngle) * Vector3.down;
                 break;
             case 2: // Влево
-                currentAngle += 90f;
+                _currentAngle += 90f;
                 rotation = new Vector3(0f, 0f, 90f);
                 direction = Vector3.zero;
                 break;
             case 3: // Вправо
-                currentAngle -= 90f;
+                _currentAngle -= 90f;
                 rotation = new Vector3(0f, 0f, -90f);
                 direction = Vector3.zero;
                 break;
@@ -333,9 +333,9 @@ public class GamesManager : MonoBehaviour
                 break;
         }
 
-        transporter.AddAction(direction);
-        transporter.AddActionRot(rotation);
-        actionList.Add(mode switch
+        _transporter.AddAction(direction);
+        _transporter.AddActionRot(rotation);
+        _actionList.Add(mode switch
         {
             0 => "Вперёд",
             1 => "Назад",
@@ -346,9 +346,33 @@ public class GamesManager : MonoBehaviour
         UpdateActionDisplay();
     }
 
-    public void StartButton() => transporter.StartActions();
+    public void StartTransporter()
+    {
+        _transporter.transform.position = Vector3.zero;
+        _currentAngle = 0;
+        _transporter.StartActions();
+    }
+    
+    public void StopTransporter()
+    {
+        _transporter.StopActions();
+        _transporter.transform.position = Vector3.zero;
+        _currentAngle = 0;
+    }
+    
+    private void UpdateActionDisplay() => actionDisplay.text = string.Join(" > ", _actionList);
 
-    private void UpdateActionDisplay() => actionDisplay.text = string.Join(" > ", actionList);
+    public void DeleteLastAction()
+    {
+        _transporter.DeleteLastAction();
+        _actionList.RemoveAt(_actionList.Count - 1);
+        UpdateActionDisplay();
+    }
+    
+    public void EndExecutor(bool win)
+    {
+        textResult.text = win ? "Ваш алгоритм выполнен правильно! Вы победили!" : "Ваш алгоритм содержит ошибку.";
+    }
 
     #endregion
 }
