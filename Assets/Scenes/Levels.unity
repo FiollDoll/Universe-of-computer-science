@@ -2322,7 +2322,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -193.6, y: -453}
+  m_AnchoredPosition: {x: -193.60004, y: -453}
   m_SizeDelta: {x: 38, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &529243694
@@ -5585,6 +5585,8 @@ MonoBehaviour:
   questionsContainer: {fileID: 499069825}
   logicMenu: {fileID: 2106549621}
   textLogicQuestion: {fileID: 2093995738}
+  buttonFalse: {fileID: 1483421004}
+  buttonTrue: {fileID: 327612316}
   executorMenu: {fileID: 1891361213}
   mapPlace: {fileID: 292681026}
   actionDisplay: {fileID: 366112446}
@@ -5971,8 +5973,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 175.74, y: -0.5}
-  m_SizeDelta: {x: 470.37, y: 353.47}
+  m_AnchoredPosition: {x: 202.74, y: -0.4999981}
+  m_SizeDelta: {x: 524.37, y: 353.47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1830485370
 MonoBehaviour:
@@ -6021,7 +6023,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
+  m_fontSize: 72
   m_fontSizeBase: 26
   m_fontWeight: 400
   m_enableAutoSizing: 1

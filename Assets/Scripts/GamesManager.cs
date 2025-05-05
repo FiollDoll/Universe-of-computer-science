@@ -49,6 +49,7 @@ public class GamesManager : MonoBehaviour
     private GameObject logicMenu;
 
     [SerializeField] private TextMeshProUGUI textLogicQuestion;
+    [SerializeField] private Image buttonFalse, buttonTrue;
 
     // LevelType - ExecutorLevel
     [Header("ExecutorLevel")] [SerializeField]
@@ -263,7 +264,7 @@ public class GamesManager : MonoBehaviour
 
     private void CheckQuestion(GameObject obj, PictureAndName pictureAndName)
     {
-        if (pictureAndName.thingName == obj.transform.Find("InputField").GetComponent<TMP_InputField>().text)
+        if (pictureAndName.thingName.ToLower() == obj.transform.Find("InputField").GetComponent<TMP_InputField>().text.ToLower())
         {
             pictureAndName.end = true;
             obj.transform.Find("ButtonCheck").GetComponent<Button>().interactable = false;
@@ -286,6 +287,17 @@ public class GamesManager : MonoBehaviour
     public void CheckLogicAnswer(bool state)
     {
         bool win = state == _selectedLogicStep.question.trueOrFalse;
+        
+        if (_selectedLogicStep.question.trueOrFalse)
+        {
+            buttonTrue.color = new Color(179f / 255f, 252f / 255f, 176f / 255f);
+            buttonFalse.color = new Color(252f / 255f, 176f / 255f, 176f / 255f);
+        }
+        else
+        {
+            buttonFalse.color = new Color(179f / 255f, 252f / 255f, 176f / 255f);
+            buttonTrue.color = new Color(252f / 255f, 176f / 255f, 176f / 255f);
+        }
         OpenArgumentMenu(win
             ? _selectedLogicStep.question.argumentQuestionTrue
             : _selectedLogicStep.question.argumentQuestionFalse);
