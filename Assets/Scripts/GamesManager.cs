@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,9 +11,11 @@ public class GamesManager : MonoBehaviour
     private RightAnswerStep _selectedRAS;
     private GiveNameByPictureStep _selectedGNBPS;
     private LogicStep _selectedLogicStep;
+    private int _selectedPage = 1;
 
     // Сцена игры
     [Header("Main")] [SerializeField] private TextMeshProUGUI textLvlName;
+    [SerializeField] private TextMeshProUGUI textPages;
     [SerializeField] private Button buttonNext, buttonBack;
 
     // LevelType - TextLevel
@@ -63,6 +64,7 @@ public class GamesManager : MonoBehaviour
 
     private void Start()
     {
+        LevelManager.Instance.stepIdx = 0;
         _selectedLvl = LevelManager.Instance.GetSelectedLevel();
         textLvlName.text = _selectedLvl.nameOfLevel;
         LevelManager.Instance.ActivateStep();
@@ -74,6 +76,7 @@ public class GamesManager : MonoBehaviour
     /// </summary>
     public bool UpdateButtonNextAndBack()
     {
+        textPages.text = _selectedPage + "/" + _selectedLvl.levelSteps.Length;
         buttonNext.interactable = true;
         buttonBack.interactable = true;
         if (LevelManager.Instance.stepIdx == (_selectedLvl.levelSteps.Length - 1))
@@ -92,6 +95,7 @@ public class GamesManager : MonoBehaviour
     {
         LevelManager.Instance.stepIdx += modif;
         LevelManager.Instance.ActivateStep();
+        _selectedPage += modif;
         UpdateButtonNextAndBack();
     }
 
@@ -352,14 +356,14 @@ public class GamesManager : MonoBehaviour
         _currentAngle = 0;
         _transporter.StartActions();
     }
-    
+
     public void StopTransporter()
     {
         _transporter.StopActions();
         _transporter.transform.position = Vector3.zero;
         _currentAngle = 0;
     }
-    
+
     private void UpdateActionDisplay() => actionDisplay.text = string.Join(" > ", _actionList);
 
     public void DeleteLastAction()
@@ -368,7 +372,7 @@ public class GamesManager : MonoBehaviour
         _actionList.RemoveAt(_actionList.Count - 1);
         UpdateActionDisplay();
     }
-    
+
     public void EndExecutor(bool win)
     {
         textResult.text = win ? "Ваш алгоритм выполнен правильно! Вы победили!" : "Ваш алгоритм содержит ошибку.";

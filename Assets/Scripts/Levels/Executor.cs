@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +7,7 @@ public class Executor : MonoBehaviour
     public float moveDistance = 1f;
     private Queue<Vector3> _actions = new Queue<Vector3>();
     private Queue<Vector3> _actionsRot = new Queue<Vector3>();
+    [SerializeField] private Transform posWin;
     private bool onEnd = false;
 
     public void AddAction(Vector3 direction) => _actions.Enqueue(direction);
@@ -61,7 +61,14 @@ public class Executor : MonoBehaviour
         
             yield return new WaitForSeconds(0.5f); // Задержка между действиями
         }
-    
-        //GamesManager.Instance.EndExecutor(onEnd);
+
+        Vector3 roundWinPos = new Vector3(Mathf.Round(posWin.transform.position.x),
+            Mathf.Round(posWin.transform.position.y), 0);
+        Vector3 roundExecutor = new Vector3(Mathf.Round(transform.position.x),
+            Mathf.Round(transform.position.y), 0);
+        
+        if (roundExecutor == roundWinPos)
+            onEnd = true;
+        GamesManager.Instance.EndExecutor(onEnd);
     }
 }
