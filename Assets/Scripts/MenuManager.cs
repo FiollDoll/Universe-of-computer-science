@@ -9,6 +9,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private AdaptiveScrollView scrollViewThemes;
     [SerializeField] private Transform blocksThemeParent;
     [SerializeField] private TextMeshProUGUI textLvlName, textThemeName, textDescription;
+    [SerializeField] private Image lvlIconInfo; 
     [SerializeField] private Button buttonStartLvl;
 
     [Header("Prefabs")] [SerializeField] private GameObject blockThemePrefab;
@@ -67,6 +68,8 @@ public class MenuManager : MonoBehaviour
         levelInfoMenu.SetActive(true);
         textLvlName.text = lvl.nameOfLevel;
         textThemeName.text = theme.nameOfTheme;
+        lvlIconInfo.sprite = lvl.preiconOfLevel;
+        lvlIconInfo.SetNativeSize();
         textDescription.text = lvl.descriptionOfLevel;
         buttonStartLvl.onClick.AddListener(() => StartLevel(theme, lvl));
     }
