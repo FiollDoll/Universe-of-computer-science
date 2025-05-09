@@ -12,32 +12,18 @@ public class AdaptiveScrollView : MonoBehaviour
     public RectTransform content;
 
     private void Awake() => UpdateContentSize();
-
+    
     public void UpdateContentSize()
     {
-        LayoutRebuilder.ForceRebuildLayoutImmediate(content);
         content.sizeDelta = Vector2.zero;
 
         foreach (RectTransform child in content)
         {
             content.sizeDelta = new Vector2(
                 content.sizeDelta.x,
-                content.sizeDelta.y + child.sizeDelta.y + LayoutUtility.GetMargin(child)
+                content.sizeDelta.y + child.sizeDelta.y
             );
         }
-        content.sizeDelta = new Vector2(content.sizeDelta.x, content.sizeDelta.y / 1.8f);
-    }
-
-}
-
-public static class LayoutUtility
-{
-    public static float GetMargin(RectTransform rectTransform)
-    {
-        var layoutElement = rectTransform.GetComponent<LayoutElement>();
-        if (layoutElement != null && layoutElement.ignoreLayout)
-            return 0f;
-
-        return rectTransform.rect.height;
+        content.sizeDelta = new Vector2(content.sizeDelta.x, content.sizeDelta.y / 1.25f);
     }
 }

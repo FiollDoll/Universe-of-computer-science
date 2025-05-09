@@ -1,9 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 public class LevelManager : MonoBehaviour
 {
@@ -82,14 +79,10 @@ public class LevelManager : MonoBehaviour
     
     private ExecutorStep GetExecutorStep(string stepName) => _dictExecutorSteps[stepName];
     
-
-    /// <summary>
-    /// Получить выбранный уровень(для общего доступа)
-    /// </summary>
-    public Level GetSelectedLevel()
-    {
-        return _selectedLvl;
-    }
+    public Theme GetSelectedTheme() => _selectedTheme;
+    
+    public Level GetSelectedLevel() => _selectedLvl;
+    
 
     /// <summary>
     /// Активировать новый уровень

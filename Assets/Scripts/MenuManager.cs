@@ -17,6 +17,15 @@ public class MenuManager : MonoBehaviour
 
     private GameObject _selectedMenuOfThemes;
 
+    private void Start()
+    {
+        if (LevelManager.Instance.GetSelectedTheme() != null)
+        {
+            OpenPageWithGames(LevelManager.Instance.GetSelectedTheme().themeCategory ==
+                              Enums.Category.FirstToFourthClass ? 0 : 1);
+        }
+    }
+    
     private void ChangePage(GameObject page)
     {
         foreach (GameObject menu in allMenu)
@@ -33,15 +42,16 @@ public class MenuManager : MonoBehaviour
 
     private void OpenListOfThemes(int mode)
     {
-        foreach (Transform child in blocksThemeParent)
-            Destroy(child.gameObject);
-
+        float startY = 665f;
         foreach (Theme theme in LevelManager.Instance.themes)
         {
             if ((Enums.Category)mode != theme.themeCategory) continue;
 
+            Vector3 newPos = new Vector3(0, startY, 0);
             var block = Instantiate(blockThemePrefab, Vector3.zero, Quaternion.identity, blocksThemeParent);
-            block.transform.Find("TextTheme").GetComponent<TextMeshProUGUI>().text = theme.nameOfTheme;
+            block.GetComponent<RectTransform>().anchoredPosition = newPos;
+            block.transform.Find("buttonsGrid").transform.Find("TextTheme").GetComponent<TextMeshProUGUI>().text = theme.nameOfTheme;
+            block.transform.Find("buttonsGrid").GetComponent<Image>().color = theme.color;
             foreach (Level lvl in theme.levelsInTheme)
             {
                 var lvlBlock = Instantiate(buttonLevelPrefab, Vector3.zero, Quaternion.identity,
@@ -53,13 +63,23 @@ public class MenuManager : MonoBehaviour
                 lvlBlock.GetComponent<Button>().onClick
                     .AddListener(() => ChoiceLevelToInfo(selectedTheme, selectedLvl));
             }
-        }
 
+            block.GetComponent<AdaptiveBlock>().UpdateContentSize();
+            startY -= 200f + (20 * theme.levelsInTheme.Count);
+        }
         scrollViewThemes.UpdateContentSize();
     }
 
     public void OpenMenu(GameObject menuObj) => ChangePage(menuObj);
 
+    public void CloseThemesAndOpenMenu(GameObject menuObj)
+    {
+        foreach (Transform child in blocksThemeParent)
+            Destroy(child.gameObject);
+        
+        ChangePage(menuObj);
+    }
+    
     public void OpenLvlMenu(int mode) => OpenPageWithGames(mode);
 
     public void ChoiceLevelToInfo(Theme theme, Level lvl)
