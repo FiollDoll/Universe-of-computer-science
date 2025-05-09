@@ -281,6 +281,8 @@ public class GamesManager : MonoBehaviour
         logicMenu.SetActive(true);
         textLogicQuestion.text = logicStep.question.question;
         _selectedLogicStep = logicStep;
+        buttonTrue.color = Color.white;
+        buttonFalse.color = Color.white;
         UpdateButtonNextAndBack();
     }
 
