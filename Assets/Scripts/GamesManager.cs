@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 public class GamesManager : MonoBehaviour
 {
@@ -54,12 +53,14 @@ public class GamesManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textLogicQuestion;
     [SerializeField] private Image buttonFalse, buttonTrue;
 
-    [Header("WiresLevel")] [SerializeField]private GameObject wiresMenu;
+    [Header("WiresLevel")] [SerializeField]
+    private GameObject wiresMenu;
+
     [SerializeField] private GameObject wordsContainer, argumentsContainer;
     [SerializeField] private GameObject wordPrefab, argumentPrefab;
     private Button _selectedButtonWord, _selectedButtonArg;
     private string _selectedWord, _selectedArgument;
-    
+
     // LevelType - ExecutorLevel
     [Header("ExecutorLevel")] [SerializeField]
     private GameObject executorMenu;
@@ -69,7 +70,7 @@ public class GamesManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI actionDisplay, textResult;
     private List<string> _actionList = new List<string>();
     private float _currentAngle = 0f; // Текущий угол направления
-    
+
     private void Awake() => Instance = this;
 
     private void Start()
@@ -188,6 +189,7 @@ public class GamesManager : MonoBehaviour
             int k = rng.Next(n--);
             (_selectedRAS.answers[n], _selectedRAS.answers[k]) = (_selectedRAS.answers[k], _selectedRAS.answers[n]);
         }
+
         GenerateAnswers();
     }
 
@@ -209,9 +211,12 @@ public class GamesManager : MonoBehaviour
 
             // Если уже проверено
             if (win)
+            {
+                newButtonAnswer.GetComponent<Button>().interactable = false;
                 newButtonAnswer.GetComponent<Image>().color = answer.answerIsRight
                     ? new Color(179f / 255f, 252f / 255f, 176f / 255f)
                     : new Color(252f / 255f, 176f / 255f, 176f / 255f);
+            }
         }
     }
 
@@ -273,7 +278,8 @@ public class GamesManager : MonoBehaviour
 
     private void CheckQuestion(GameObject obj, PictureAndName pictureAndName)
     {
-        if (pictureAndName.thingName.ToLower() == obj.transform.Find("InputField").GetComponent<TMP_InputField>().text.ToLower())
+        if (pictureAndName.thingName.ToLower() ==
+            obj.transform.Find("InputField").GetComponent<TMP_InputField>().text.ToLower())
         {
             pictureAndName.end = true;
             obj.transform.Find("ButtonCheck").GetComponent<Button>().interactable = false;
@@ -298,17 +304,15 @@ public class GamesManager : MonoBehaviour
     public void CheckLogicAnswer(bool state)
     {
         bool win = state == _selectedLogicStep.question.trueOrFalse;
-        
-        if (_selectedLogicStep.question.trueOrFalse)
-        {
-            buttonTrue.color = new Color(179f / 255f, 252f / 255f, 176f / 255f);
-            buttonFalse.color = new Color(252f / 255f, 176f / 255f, 176f / 255f);
-        }
-        else
-        {
-            buttonFalse.color = new Color(179f / 255f, 252f / 255f, 176f / 255f);
-            buttonTrue.color = new Color(252f / 255f, 176f / 255f, 176f / 255f);
-        }
+
+        buttonTrue.GetComponent<Button>().interactable = false;
+        buttonFalse.GetComponent<Button>().interactable = false;
+        buttonTrue.color = _selectedLogicStep.question.trueOrFalse
+            ? new Color(179f / 255f, 252f / 255f, 176f / 255f)
+            : new Color(252f / 255f, 176f / 255f, 176f / 255f);
+        buttonFalse.color = _selectedLogicStep.question.trueOrFalse
+            ? new Color(252f / 255f, 176f / 255f, 176f / 255f)
+            : new Color(179f / 255f, 252f / 255f, 176f / 255f);
         OpenArgumentMenu(win
             ? _selectedLogicStep.question.argumentQuestionTrue
             : _selectedLogicStep.question.argumentQuestionFalse);
@@ -403,7 +407,7 @@ public class GamesManager : MonoBehaviour
 
     #endregion
 
-    #region MyRegion
+    #region WiresLevel
 
     public void ActivateWiresMenu(WiresStep wiresStep)
     {
@@ -430,8 +434,9 @@ public class GamesManager : MonoBehaviour
             word.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = wire.word;
             wire.buttonWord = word.GetComponent<Button>();
             wire.buttonWord.onClick.AddListener(() => SelectWord(newId));
-            
-            GameObject argument = Instantiate(argumentPrefab, Vector3.zero, Quaternion.identity, argumentsContainer.transform);
+
+            GameObject argument = Instantiate(argumentPrefab, Vector3.zero, Quaternion.identity,
+                argumentsContainer.transform);
             argument.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = wire.wordArgument;
             wire.buttonArg = argument.GetComponent<Button>();
             wire.buttonArg.onClick.AddListener(() => SelectArgument(newId));
@@ -466,14 +471,16 @@ public class GamesManager : MonoBehaviour
             {
                 _selectedButtonWord.interactable = false;
                 _selectedButtonArg.interactable = false;
-                _selectedButtonWord.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = wire.word + " ("+ wire.id + ")";
-                _selectedButtonArg.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = wire.wordArgument + " ("+ wire.id + ")";
+                _selectedButtonWord.transform.Find("Text").GetComponent<TextMeshProUGUI>().text =
+                    wire.word + " (" + wire.id + ")";
+                _selectedButtonArg.transform.Find("Text").GetComponent<TextMeshProUGUI>().text =
+                    wire.wordArgument + " (" + wire.id + ")";
                 _selectedWord = "";
                 _selectedArgument = "";
                 return;
             }
         }
-        
+
         // Если не нашлось
         _selectedButtonWord.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = _selectedWord;
         _selectedButtonArg.transform.Find("Text").GetComponent<TextMeshProUGUI>().text = _selectedArgument;

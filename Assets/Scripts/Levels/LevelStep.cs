@@ -108,7 +108,7 @@ public class WiresStep
         foreach (Wire wire in wiresStep.wires)
             wires.Add(new Wire(wire)); // Создаем копию каждого wire
     }
-    
+
     public void ShuffleWires()
     {
         ShuffleField(wires, "word");
@@ -147,8 +147,11 @@ public class Wire
     public int id;
     public string word;
     public string wordArgument;
-    
-    public Wire() { }
+
+    public Wire()
+    {
+    }
+
     public Wire(Wire wire)
     {
         id = wire.id;
