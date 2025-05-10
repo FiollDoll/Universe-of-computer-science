@@ -19,6 +19,8 @@ public class Enums
         RightAnswerLevel,
         GiveNameByPictureLevel,
         LogicLevel,
-        ExecutorLevel
+        ExecutorLevel,
+        WiresLevel,
+        ColorLevel
     }
 }

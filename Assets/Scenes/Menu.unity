@@ -181,6 +181,8 @@ MonoBehaviour:
         lvlType: 0
       - stepName: whatIsInfo2
         lvlType: 0
+      - stepName: test
+        lvlType: 6
     - nameOfLevel: "\u041F\u0440\u0430\u0432\u0438\u043B\u0430 \u043F\u043E\u0432\u0435\u0434\u0435\u043D\u0438\u044F
         \u0432 \u043A\u0430\u0431\u0438\u043D\u0435\u0442\u0435 \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0442\u0438\u043A\u0438"
       preiconOfLevel: {fileID: 6081332091653648413, guid: 188a1dfb5d32e968b9689c0d86684f88, type: 3}
@@ -1135,6 +1137,24 @@ MonoBehaviour:
   executorSteps:
   - stepName: executor
     mapPrefab: {fileID: 2622704622349880316, guid: fbe90c49b8cfa094695591b4346ec672, type: 3}
+  wiresSteps:
+  - stepName: test
+    wires:
+    - buttonWord: {fileID: 0}
+      buttonArg: {fileID: 0}
+      id: 1
+      word: te
+      wordArgument: et
+    - buttonWord: {fileID: 0}
+      buttonArg: {fileID: 0}
+      id: 2
+      word: 123
+      wordArgument: 321
+    - buttonWord: {fileID: 0}
+      buttonArg: {fileID: 0}
+      id: 3
+      word: rere
+      wordArgument: erere
 --- !u!1 &183249128
 GameObject:
   m_ObjectHideFlags: 0

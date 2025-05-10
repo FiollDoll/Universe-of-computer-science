@@ -95,3 +95,64 @@ public class ExecutorStep
     public string stepName;
     public GameObject mapPrefab;
 }
+
+[System.Serializable]
+public class WiresStep
+{
+    public string stepName;
+    public List<Wire> wires = new List<Wire>();
+
+    public WiresStep(WiresStep wiresStep)
+    {
+        stepName = wiresStep.stepName;
+        foreach (Wire wire in wiresStep.wires)
+            wires.Add(new Wire(wire)); // Создаем копию каждого wire
+    }
+    
+    public void ShuffleWires()
+    {
+        ShuffleField(wires, "word");
+        ShuffleField(wires, "wordArgument");
+    }
+
+    private void ShuffleField(List<Wire> wires, string fieldName)
+    {
+        List<string> fieldValues = new List<string>();
+
+        foreach (var wire in wires)
+            fieldValues.Add(fieldName == "word" ? wire.word : wire.wordArgument);
+
+        // Перемешиваем значения
+        System.Random random = new System.Random();
+        for (int i = 0; i < fieldValues.Count; i++)
+        {
+            int j = random.Next(i, fieldValues.Count);
+            (fieldValues[i], fieldValues[j]) = (fieldValues[j], fieldValues[i]);
+        }
+
+        for (int i = 0; i < wires.Count; i++)
+        {
+            if (fieldName == "word")
+                wires[i].word = fieldValues[i];
+            else
+                wires[i].wordArgument = fieldValues[i];
+        }
+    }
+}
+
+[System.Serializable]
+public class Wire
+{
+    [HideInInspector] public UnityEngine.UI.Button buttonWord, buttonArg;
+    public int id;
+    public string word;
+    public string wordArgument;
+    
+    public Wire() { }
+    public Wire(Wire wire)
+    {
+        id = wire.id;
+        word = wire.word;
+        wordArgument = wire.wordArgument;
+    }
+}

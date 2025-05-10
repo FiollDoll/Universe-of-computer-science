@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
     public List<GiveNameByPictureStep> giveNameSteps = new List<GiveNameByPictureStep>();
     public List<LogicStep> logicSteps = new List<LogicStep>();
     public List<ExecutorStep> executorSteps = new List<ExecutorStep>();
-
+    public List<WiresStep> wiresSteps = new List<WiresStep>();
 
     private readonly Dictionary<string, Theme> _dictAllThemes = new Dictionary<string, Theme>();
     private readonly Dictionary<string, TextStep> _dictTextSteps = new Dictionary<string, TextStep>();
@@ -32,6 +32,7 @@ public class LevelManager : MonoBehaviour
     private readonly Dictionary<string, GiveNameByPictureStep> _dictGiveNameSteps = new Dictionary<string, GiveNameByPictureStep>();
     private readonly Dictionary<string, LogicStep> _dictLogicSteps = new Dictionary<string, LogicStep>();
     private readonly Dictionary<string, ExecutorStep> _dictExecutorSteps = new Dictionary<string, ExecutorStep>();
+    private readonly Dictionary<string, WiresStep> _dictWiresStep = new Dictionary<string, WiresStep>();
 
     private void Awake()
     {
@@ -65,6 +66,9 @@ public class LevelManager : MonoBehaviour
         
         foreach (ExecutorStep step in executorSteps)
             _dictExecutorSteps.Add(step.stepName, step);
+
+        foreach (WiresStep step in wiresSteps)
+            _dictWiresStep.Add(step.stepName, step);
     }
 
     private TextStep GetTextStep(string stepName) => _dictTextSteps[stepName];
@@ -78,6 +82,8 @@ public class LevelManager : MonoBehaviour
     private LogicStep GetLogicStep(string stepName) => _dictLogicSteps[stepName];
     
     private ExecutorStep GetExecutorStep(string stepName) => _dictExecutorSteps[stepName];
+
+    private WiresStep GetWiresStep(string stepName) => _dictWiresStep[stepName];
     
     public Theme GetSelectedTheme() => _selectedTheme;
     
@@ -128,6 +134,10 @@ public class LevelManager : MonoBehaviour
             case Enums.LevelType.ExecutorLevel:
                 ExecutorStep executorStep = GetExecutorStep(_selectedStep.stepName);
                 GamesManager.Instance.ActivateExecutorMenu(executorStep);
+                break;
+            case Enums.LevelType.WiresLevel:
+                WiresStep wiresStep = GetWiresStep(_selectedStep.stepName);
+                GamesManager.Instance.ActivateWiresMenu(wiresStep);
                 break;
         }
     }
