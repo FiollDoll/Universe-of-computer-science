@@ -37,7 +37,8 @@ public class Answer
 public class PictureStep
 {
     public string stepName;
-    public Sprite firstPicture, secondPicture;
+    public Sprite firstPicture;
+    [TextArea(0, 10)] public string textPicture;
 }
 
 [System.Serializable]

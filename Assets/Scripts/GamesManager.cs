@@ -24,7 +24,6 @@ public class GamesManager : MonoBehaviour
     [Header("TextLevel")] [SerializeField] private GameObject lvlInfoMenu;
 
     [SerializeField] private TextMeshProUGUI lvlInfo;
-    [SerializeField] private Image lvlImage;
 
     // LevelType - RightAnswerLevel
     [Header("RightAnswerLevel")] [SerializeField]
@@ -38,7 +37,8 @@ public class GamesManager : MonoBehaviour
     [Header("PictureLevel")] [SerializeField]
     private GameObject pictureMenu;
 
-    [SerializeField] private GameObject firstStyle, secondStyle;
+    [SerializeField] private GameObject firstStyle;
+    [SerializeField] private TextMeshProUGUI textPicture;
 
     // LevelType - GiveNameByPictureLevel
     [Header("GiveNameByPictureLevel")] [SerializeField]
@@ -141,7 +141,6 @@ public class GamesManager : MonoBehaviour
     {
         lvlInfoMenu.SetActive(true);
         lvlInfo.text = textStep.textDescription;
-        lvlImage.sprite = textStep.image;
     }
 
     /// <summary>
@@ -151,19 +150,10 @@ public class GamesManager : MonoBehaviour
     public void ActivatePictureMenu(PictureStep pictureStep)
     {
         pictureMenu.SetActive(true);
-        secondStyle.SetActive(false);
-        firstStyle.SetActive(false);
-        if (pictureStep.secondPicture != null) // Значит второй стиль
-        {
-            secondStyle.SetActive(true);
-            secondStyle.transform.Find("Image").GetComponent<Image>().sprite = pictureStep.firstPicture;
-            secondStyle.transform.Find("Image1").GetComponent<Image>().sprite = pictureStep.secondPicture;
-        }
-        else
-        {
-            firstStyle.SetActive(true);
-            firstStyle.transform.Find("Image").GetComponent<Image>().sprite = pictureStep.firstPicture;
-        }
+        firstStyle.SetActive(true);
+        firstStyle.transform.Find("Image").GetComponent<Image>().sprite = pictureStep.firstPicture;
+        firstStyle.transform.Find("Image").GetComponent<Image>().SetNativeSize();
+        textPicture.text = pictureStep.textPicture;
     }
 
     #endregion
@@ -296,6 +286,8 @@ public class GamesManager : MonoBehaviour
         logicMenu.SetActive(true);
         textLogicQuestion.text = logicStep.question.question;
         _selectedLogicStep = logicStep;
+        buttonTrue.GetComponent<Button>().interactable = true;
+        buttonFalse.GetComponent<Button>().interactable = true;
         buttonTrue.color = Color.white;
         buttonFalse.color = Color.white;
         UpdateButtonNextAndBack();
